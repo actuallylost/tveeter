@@ -1,17 +1,15 @@
 // React
 import React, { useState } from "react";
 
-// Components
-import Wrapper from "./components/Wrapper";
-import Header from "./components/Header";
-import Content from "./components/Content";
-import Message from "./components/Message";
-import Footer from "./components/Footer";
-
 // Styles
 import { GlobalStyles } from "./components/common/GlobalStyles";
-import { StyledInput } from "./components/Footer/style";
-import { StyledButton } from "./components/Footer/style";
+import Content from "./components/Content";
+import Footer from "./components/Footer";
+import { StyledButton, StyledInput } from "./components/Footer/style";
+import Header from "./components/Header";
+import Message from "./components/Message";
+// Components
+import Wrapper from "./components/Wrapper";
 
 const App = () => {
 	const [msg, setMsg] = useState<string>("");
@@ -46,7 +44,12 @@ const App = () => {
 					))}
 				</Content>
 				<Footer>
-					<StyledInput value={msg} onChange={handleChange} onKeyDown={handleKeyDown} />
+					<StyledInput
+						value={msg}
+						onChange={handleChange}
+						onKeyDown={handleKeyDown}
+						placeholder="Your message here..."
+					/>
 					<StyledButton onClick={handleSubmit}>Send</StyledButton>
 				</Footer>
 			</Wrapper>
