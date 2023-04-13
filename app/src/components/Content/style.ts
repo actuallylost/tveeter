@@ -7,7 +7,7 @@ export const StyledContent = styled(VStack)`
 	// The god solution for all problems in life is flex-grow: 1
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: start;
 	padding: 0px 8px;
 	gap: 8px;
 
