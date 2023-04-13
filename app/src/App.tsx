@@ -1,11 +1,13 @@
-import React from "react";
+import Wrapper from "./components/Wrapper";
+import { GlobalStyles } from "./components/common/GlobalStyles";
 
-function App() {
+const App = () => {
 	return (
-		<div>
-			<h1>Hello world!</h1>
-		</div>
+		<>
+			<GlobalStyles />
+			<Wrapper />
+		</>
 	);
-}
+};
 
 export default App;
