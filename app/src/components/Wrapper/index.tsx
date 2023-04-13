@@ -1,12 +1,8 @@
-import Chat from "../Chat";
-import { VStack } from "../common/Stack";
+// Styles
+import { StyledWrapper } from "./style";
 
-const Wrapper = () => {
-	return (
-		<VStack background="#141313" height="100vh">
-			<Chat />
-		</VStack>
-	);
+const Wrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+	return <StyledWrapper>{children}</StyledWrapper>;
 };
 
 export default Wrapper;
