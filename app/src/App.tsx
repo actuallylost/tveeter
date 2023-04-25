@@ -3,13 +3,13 @@ import React, { useState } from "react";
 
 // Styles
 import { GlobalStyles } from "./components/common/GlobalStyles";
-import Content from "./components/Content";
-import Footer from "./components/Footer";
+import { Content } from "./components/Content";
+import { Footer } from "./components/Footer";
 import { StyledButton, StyledInput } from "./components/Footer/style";
-import Header from "./components/Header";
-import Message from "./components/Message";
+import { Header } from "./components/Header";
+import { Message } from "./components/Message";
 // Components
-import Wrapper from "./components/Wrapper";
+import { Wrapper } from "./components/Wrapper";
 
 const App = () => {
 	const [msg, setMsg] = useState<string>("");

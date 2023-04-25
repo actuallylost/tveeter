@@ -7,7 +7,7 @@ interface MessageProps {
 	children?: React.ReactNode;
 }
 
-const Message: React.FC<MessageProps> = ({ username, children }) => {
+export const Message: React.FC<MessageProps> = ({ username, children }) => {
 	return (
 		<StyledMessage>
 			<StyledUsername>{username}</StyledUsername>
@@ -15,5 +15,3 @@ const Message: React.FC<MessageProps> = ({ username, children }) => {
 		</StyledMessage>
 	);
 };
-
-export default Message;
