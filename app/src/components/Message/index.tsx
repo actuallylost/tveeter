@@ -1,7 +1,17 @@
 // import { useState } from "react";
 
-import { StyledMessage } from "./style";
+import { StyledUsername, StyledMessage } from "./style";
 
-export const Message: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
-	return <StyledMessage>{children}</StyledMessage>;
+interface MessageProps {
+	username: string;
+	children?: React.ReactNode;
+}
+
+export const Message: React.FC<MessageProps> = ({ username, children }) => {
+	return (
+		<StyledMessage>
+			<StyledUsername>{username}</StyledUsername>
+			{children}
+		</StyledMessage>
+	);
 };
