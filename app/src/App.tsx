@@ -40,7 +40,9 @@ const App = () => {
 				<Header>Tveeter | Username</Header>
 				<Content>
 					{messages.map((message, index) => (
-						<Message key={index}>{message}</Message>
+						<Message username="Username" key={index}>
+							{message}
+						</Message>
 					))}
 				</Content>
 				<Footer>
