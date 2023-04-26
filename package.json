@@ -3,6 +3,7 @@
 		"prepare": "husky install"
 	},
 	"dependencies": {
+		"@nestjs/mapped-types": "*",
 		"husky": "^8.0.3"
 	},
 	"devDependencies": {
