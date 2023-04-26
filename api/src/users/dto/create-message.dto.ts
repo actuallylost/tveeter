@@ -1,10 +1,13 @@
 import { IsDefined, IsNumber, IsString } from "class-validator";
 
-export class CreateUserDto {
+export class CreateMessageDto {
 	@IsNumber()
 	id: number;
 
 	@IsString()
 	@IsDefined()
-	name: string;
+	content: string;
+
+	@IsNumber()
+	userId: number;
 }

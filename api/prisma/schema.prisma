@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id       Int       @id @unique @default(autoincrement())
-  name     String
+  name     String    @unique
   messages Message[]
 }
 
