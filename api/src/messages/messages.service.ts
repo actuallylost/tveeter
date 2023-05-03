@@ -31,6 +31,15 @@ export class MessagesService {
 		});
 	}
 
+	// async createChannelMemberships(options: CreateMessageOptions): Promise<Message> {
+	// 	return await this.prisma.channelMembership.create({
+	// 		data: {
+	// 			userId: options.authorId,
+	// 			channelId: options.channelId,
+	// 		},
+	// 	});
+	// }
+
 	async createMessage(options: CreateMessageOptions): Promise<Message> {
 		return await this.prisma.message.create({
 			data: options,
