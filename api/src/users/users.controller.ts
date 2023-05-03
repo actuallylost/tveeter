@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { CreateMessageDto } from "./dto/create-message.dto";
 
 @Controller("users")
 export class UsersController {
@@ -25,16 +24,13 @@ export class UsersController {
 		return await this.usersService.getUserMessages(parseInt(id));
 	}
 
-	// PUT localhost:3000/users
-	@Put("/")
-	async createUser(@Body() createUserDto: CreateUserDto) {
-		return await this.usersService.createUser(createUserDto);
-	}
-
-	// POST localhost:3000/users/:id/messages
-	@Post("/:id/messages")
-	async createMessage(@Body() createMessageDto: CreateMessageDto) {
-		return await this.usersService.createMessage(createMessageDto);
+	// PUT localhost:3000/users/:id
+	@Put("/:id")
+	async createUser(@Param() id: string, @Body() { username }: CreateUserDto) {
+		return await this.usersService.createUser({
+			id: parseInt(id),
+			username: username,
+		});
 	}
 
 	// DELETE localhost:3000/users/:id

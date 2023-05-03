@@ -3,6 +3,11 @@ import { PrismaService } from "src/common/prisma.service";
 import { User } from "@prisma/client";
 import { Message } from "@prisma/client";
 
+class CreateUserOptions {
+	id: number;
+	username: string;
+}
+
 @Injectable()
 export class UsersService {
 	constructor(private prisma: PrismaService) {}
@@ -17,21 +22,15 @@ export class UsersService {
 		});
 	}
 
-	async getUserMessages(userId: number): Promise<Message[]> {
+	async getUserMessages(id: number): Promise<Message[]> {
 		return await this.prisma.message.findMany({
-			where: { userId },
+			where: { id },
 		});
 	}
 
-	async createUser(data: User): Promise<User> {
+	async createUser(options: CreateUserOptions): Promise<User> {
 		return await this.prisma.user.create({
-			data,
-		});
-	}
-
-	async createMessage(data: Message): Promise<Message> {
-		return await this.prisma.message.create({
-			data,
+			data: options,
 		});
 	}
 

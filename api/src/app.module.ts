@@ -1,8 +1,11 @@
 import { Module } from "@nestjs/common";
-import { UsersModule } from "./users/users.module";
-// import { MessagesModule } from "./messages/messages.module";
+
+// Modules
+import { UsersModule } from "./users";
+import { MessagesModule } from "./messages";
+import { ChannelsModule } from "./channels";
 
 @Module({
-	imports: [UsersModule],
+	imports: [UsersModule, MessagesModule, ChannelsModule],
 })
 export class AppModule {}
