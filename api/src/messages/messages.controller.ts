@@ -8,8 +8,8 @@ export class MessagesController {
 
 	// GET localhost:3000/channels/:id/messages
 	@Get("/")
-	async getMessages(@Param("id") id: string) {
-		return await this.messagesService.getMessages(parseInt(id));
+	async getMessagesByChannelId(@Param("id") id: string) {
+		return await this.messagesService.getMessagesByChannelId(parseInt(id));
 	}
 
 	// GET localhost:3000/channels/:id/messages/:id

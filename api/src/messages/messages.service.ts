@@ -12,7 +12,7 @@ class CreateMessageOptions {
 export class MessagesService {
 	constructor(private prisma: PrismaService) {}
 
-	async getMessages(id: number): Promise<Message[]> {
+	async getMessagesByChannelId(id: number): Promise<Message[]> {
 		return await this.prisma.message.findMany({
 			where: { id },
 		});
@@ -23,6 +23,15 @@ export class MessagesService {
 			where: { id: id },
 		});
 	}
+
+	// async createChannelMemberships(options: CreateMessageOptions): Promise<Message> {
+	// 	return await this.prisma.channelMembership.create({
+	// 		data: {
+	// 			userId: options.authorId,
+	// 			channelId: options.channelId,
+	// 		},
+	// 	});
+	// }
 
 	async createMessage(options: CreateMessageOptions): Promise<Message> {
 		await this.prisma.channelMembership.create({
