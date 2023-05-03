@@ -1,7 +1,7 @@
 import { IsDefined, IsString } from "class-validator";
 
-export class CreateUserDto {
+export class CreateMessageDto {
 	@IsString()
 	@IsDefined()
-	username: string;
+	content: string;
 }
