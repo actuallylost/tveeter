@@ -18,6 +18,12 @@ export class ChannelsController {
 		return await this.channelsService.getChannel(parseInt(id));
 	}
 
+	// GET localhost:3000/channels/:id/users
+	@Get("/:id/users")
+	async getChannelUsers(@Param("id") id: string) {
+		return await this.channelsService.getChannelUsers(parseInt(id));
+	}
+
 	// PUT localhost:3000/channels/:id
 	@Put("/:id")
 	// TODO: Check if the following is necessary - { id }: CreateChannelDto
