@@ -3,11 +3,11 @@ import { IsDefined, IsEmail, IsString, IsStrongPassword } from "class-validator"
 export class LoginDto {
 	@IsDefined()
 	@IsString()
-	username: string;
+	username!: string;
 
 	@IsDefined()
 	@IsEmail()
-	email: string;
+	email!: string;
 
 	@IsDefined()
 	@IsString()
@@ -18,5 +18,5 @@ export class LoginDto {
 		minUppercase: 1,
 		minLowercase: 1,
 	})
-	password: string;
+	password!: string;
 }

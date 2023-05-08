@@ -1,6 +1,7 @@
+import { PrismaService } from "src/common/services/prisma.service";
+
 import { Injectable } from "@nestjs/common";
 import { Channel, User } from "@prisma/client";
-import { PrismaService } from "src/common/prisma.service";
 
 @Injectable()
 export class ChannelsService {
@@ -10,13 +11,13 @@ export class ChannelsService {
 		return await this.prisma.channel.findMany();
 	}
 
-	async getChannel(id: number): Promise<Channel> {
-		return await this.prisma.channel.findUnique({
+	async getChannel(id: bigint): Promise<Channel | null> {
+		return this.prisma.channel.findUnique({
 			where: { id },
 		});
 	}
 
-	async getChannelUsers(id: number): Promise<User[]> {
+	async getChannelUsers(id: bigint): Promise<User[]> {
 		return await this.prisma.user.findMany({
 			where: {
 				channels: {
@@ -28,7 +29,7 @@ export class ChannelsService {
 		});
 	}
 
-	async createChannel(id: number): Promise<Channel> {
+	async createChannel(id: bigint): Promise<Channel> {
 		// Fetch all users
 		const users = await this.prisma.user.findMany();
 		const channel = await this.prisma.channel.create({
@@ -46,7 +47,7 @@ export class ChannelsService {
 		return channel;
 	}
 
-	async deleteChannel(id: number): Promise<Channel> {
+	async deleteChannel(id: bigint): Promise<Channel> {
 		// Delete all Message and ChannelMembership entries
 		await this.prisma.message.deleteMany({
 			where: { channelId: id },

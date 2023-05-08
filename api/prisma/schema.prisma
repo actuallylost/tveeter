@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        Int                 @id @unique @default(autoincrement())
+  id        BigInt              @id
   email     String              @unique
   username  String              @unique
   password  String
@@ -21,15 +21,15 @@ model User {
 }
 
 model Channel {
-  id        Int                 @id @unique @default(autoincrement())
+  id        BigInt              @id
   createdAt DateTime            @default(now())
   messages  Message[]
   users     ChannelMembership[]
 }
 
 model ChannelMembership {
-  userId    Int
-  channelId Int
+  userId    BigInt
+  channelId BigInt
 
   user    User    @relation(fields: [userId], references: [id])
   channel Channel @relation(fields: [channelId], references: [id])
@@ -38,12 +38,14 @@ model ChannelMembership {
 }
 
 model Message {
-  id        Int      @id @unique @default(autoincrement())
+  id        BigInt
   content   String
-  authorId  Int
-  channelId Int
+  authorId  BigInt
+  channelId BigInt
   createdAt DateTime @default(now())
 
   user    User    @relation(fields: [authorId], references: [id])
   channel Channel @relation(fields: [channelId], references: [id])
+
+  @@id([channelId, id])
 }

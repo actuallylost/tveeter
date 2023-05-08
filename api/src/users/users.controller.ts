@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from "@nestjs/common";
-import { UsersService } from "./users.service";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+
 import { CreateUserDto } from "./dto/create-user.dto";
+import { UsersService } from "./users.service";
 
 @Controller("users")
 export class UsersController {
@@ -25,7 +26,7 @@ export class UsersController {
 	}
 
 	// PUT localhost:3000/users/:id
-	@Put("/:id")
+	@Post("/:id")
 	async createUser(@Param() id: string, @Body() { username }: CreateUserDto) {
 		return await this.usersService.createUser({
 			id: parseInt(id),
