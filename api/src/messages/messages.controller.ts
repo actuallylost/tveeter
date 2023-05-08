@@ -12,13 +12,13 @@ export class MessagesController {
 		return await this.messagesService.getMessagesByChannelId(parseInt(id));
 	}
 
-	// GET localhost:3000/channels/:id/messages/:id
+	// GET localhost:3000/channels/:id/messages/:msgId
 	@Get("/:msgId")
-	async getMessage(@Param("id") id: string, @Param("msgId") msgId: string) {
-		return await this.messagesService.getMessage(parseInt(msgId));
+	async getMessageById(@Param("id") id: string, @Param("msgId") msgId: string) {
+		return await this.messagesService.getMessageById(parseInt(id), parseInt(msgId));
 	}
 
-	// POST localhost:3000/channels/:id/messages/:id
+	// POST localhost:3000/channels/:id/messages/:msgId
 	@Post("/:msgId")
 	async createMessage(
 		@Param("id") channelId: string,
@@ -33,9 +33,9 @@ export class MessagesController {
 		});
 	}
 
-	// DELETE localhost:3000/channels/:id/messages/:id
-	@Delete("/:id")
-	async deleteMessage(@Param("id") id: string) {
+	// DELETE localhost:3000/channels/:id/messages/:msgId
+	@Delete("/:msgId")
+	async deleteMessage(@Param("id") id: string, @Param("msgId") msgId: string) {
 		return await this.messagesService.deleteMessage(parseInt(id));
 	}
 }
