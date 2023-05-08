@@ -1,6 +1,7 @@
+import { PrismaService } from "src/common/prisma.service";
+
 import { Injectable } from "@nestjs/common";
 import { Message } from "@prisma/client";
-import { PrismaService } from "src/common/prisma.service";
 
 class CreateMessageOptions {
 	authorId: number;
@@ -22,23 +23,11 @@ export class MessagesService {
 	// async getMessagesByUserId(userId: number): Promise<Message[]> {
 	// 	return await this.prisma.message.findMany({
 	// 		where: { authorId: userId },
-	// 	});
-	// }
-
 	async getMessageById(channelId: number, msgId: number): Promise<Message> {
 		return await this.prisma.message.findUnique({
 			where: { id: msgId /** , channelId: channelId  */ },
 		});
 	}
-
-	// async createChannelMemberships(options: CreateMessageOptions): Promise<Message> {
-	// 	return await this.prisma.channelMembership.create({
-	// 		data: {
-	// 			userId: options.authorId,
-	// 			channelId: options.channelId,
-	// 		},
-	// 	});
-	// }
 
 	async createMessage(options: CreateMessageOptions): Promise<Message> {
 		return await this.prisma.message.create({
