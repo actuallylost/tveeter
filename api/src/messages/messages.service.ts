@@ -14,32 +14,24 @@ export class MessagesService {
 
 	async getMessagesByChannelId(id: number): Promise<Message[]> {
 		return await this.prisma.message.findMany({
-			where: { id },
+			where: { channelId: id },
 		});
 	}
 
-	async getMessage(id: number): Promise<Message> {
-		return await this.prisma.message.findUnique({
-			where: { id: id },
-		});
-	}
-
-	// async createChannelMemberships(options: CreateMessageOptions): Promise<Message> {
-	// 	return await this.prisma.channelMembership.create({
-	// 		data: {
-	// 			userId: options.authorId,
-	// 			channelId: options.channelId,
-	// 		},
+	// TODO: Implement this
+	// async getMessagesByUserId(userId: number): Promise<Message[]> {
+	// 	return await this.prisma.message.findMany({
+	// 		where: { authorId: userId },
 	// 	});
 	// }
 
-	async createMessage(options: CreateMessageOptions): Promise<Message> {
-		await this.prisma.channelMembership.create({
-			data: {
-				userId: options.authorId,
-				channelId: options.channelId,
-			},
+	async getMessageById(channelId: number, msgId: number): Promise<Message> {
+		return await this.prisma.message.findUnique({
+			where: { id: msgId /** , channelId: channelId  */ },
 		});
+	}
+
+	async createMessage(options: CreateMessageOptions): Promise<Message> {
 		return await this.prisma.message.create({
 			data: options,
 		});
