@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/common/prisma.service";
+
 import { User } from "@prisma/client";
 import { Message } from "@prisma/client";
+
+import { PrismaService } from "src/common/prisma.service";
 
 class CreateUserOptions {
 	id: number;

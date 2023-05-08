@@ -12,7 +12,9 @@ datasource db {
 
 model User {
   id        Int                 @id @unique @default(autoincrement())
+  email     String              @unique
   username  String              @unique
+  password  String
   createdAt DateTime            @default(now())
   messages  Message[]
   channels  ChannelMembership[]
