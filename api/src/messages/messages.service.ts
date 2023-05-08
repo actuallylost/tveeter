@@ -1,43 +1,48 @@
-import { PrismaService } from "src/common/prisma.service";
+import { PrismaService } from "src/common/services/prisma.service";
+import { SnowflakeService } from "src/common/services/snowflake.service";
 
 import { Injectable } from "@nestjs/common";
 import { Message } from "@prisma/client";
 
 class CreateMessageOptions {
-	authorId: number;
-	channelId: number;
-	content: string;
+	authorId!: bigint;
+	channelId!: bigint;
+	content!: string;
 }
 
 @Injectable()
 export class MessagesService {
-	constructor(private prisma: PrismaService) {}
+	constructor(private prisma: PrismaService, private snowflakeGen: SnowflakeService) {}
 
-	async getMessagesByChannelId(id: number): Promise<Message[]> {
+	async getMessagesByChannelId(id: bigint): Promise<Message[]> {
 		return await this.prisma.message.findMany({
 			where: { channelId: id },
 		});
 	}
 
-	// TODO: Implement this
-	// async getMessagesByUserId(userId: number): Promise<Message[]> {
-	// 	return await this.prisma.message.findMany({
-	// 		where: { authorId: userId },
-	async getMessageById(channelId: number, msgId: number): Promise<Message> {
+	// TODO: Implement
+	// async getMessagesByUserId(userId: number): Promise<Message[]>
+
+	async getMessageById(channelId: bigint, msgId: bigint): Promise<Message | null> {
 		return await this.prisma.message.findUnique({
-			where: { id: msgId /** , channelId: channelId  */ },
+			where: { channelId_id: { channelId: channelId, id: msgId } },
 		});
 	}
 
 	async createMessage(options: CreateMessageOptions): Promise<Message> {
 		return await this.prisma.message.create({
-			data: options,
+			data: {
+				id: this.snowflakeGen.generate().toBigInt(),
+				authorId: options.authorId,
+				channelId: options.channelId,
+				content: options.content,
+			},
 		});
 	}
 
-	async deleteMessage(id: number): Promise<Message> {
+	async deleteMessage(channelId: bigint, messageId: bigint): Promise<Message> {
 		return await this.prisma.message.delete({
-			where: { id },
+			where: { channelId_id: { channelId: channelId, id: messageId } },
 		});
 	}
 }

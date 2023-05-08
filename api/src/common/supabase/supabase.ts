@@ -1,11 +1,10 @@
+import { Request } from "express";
+import { ExtractJwt } from "passport-jwt";
+
 import { Inject, Injectable, Logger, Scope } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { REQUEST } from "@nestjs/core";
-import { Request } from "express";
-
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-
-import { ExtractJwt } from "passport-jwt";
 
 @Injectable({ scope: Scope.REQUEST })
 export class Supabase {
