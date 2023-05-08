@@ -24,7 +24,7 @@ export class UsersService {
 
 	async getUserMessages(id: number): Promise<Message[]> {
 		return await this.prisma.message.findMany({
-			where: { id },
+			where: { authorId: id },
 		});
 	}
 
