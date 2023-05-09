@@ -4,11 +4,11 @@ import { Injectable } from "@nestjs/common";
 import { Message, User } from "@prisma/client";
 import { SnowflakeService } from "src/common/services/snowflake.service";
 
-class CreateUserOptions {
-	id!: bigint;
-	username!: string;
-	email!: string;
-	password!: string;
+export interface CreateUserOptions {
+	id: bigint;
+	username: string;
+	email: string;
+	password: string;
 }
 
 @Injectable()
