@@ -1,3 +1,28 @@
+import { Logger } from "@nestjs/common";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
+
+export class SupaClient {
+	private readonly logger = new Logger(SupaClient.name);
+	private supabaseClient: SupabaseClient;
+
+	constructor() {
+		this.supabaseClient = this.createSupabaseClient();
+	}
+
+	createSupabaseClient(): SupabaseClient {
+		const SUPABASE_API_URL = process.env.SUPABASE_URL;
+		const SUPABASE_API_KEY = process.env.SUPABASE_API_KEY;
+
+		if (!SUPABASE_API_URL || !SUPABASE_API_KEY) {
+			throw this.logger.error(
+				"Missing SUPABASE_URL or SUPABASE_API_KEY environment variable",
+			);
+		}
+
+		return createClient(SUPABASE_API_URL, SUPABASE_API_KEY);
+	}
+}
+
 // import { Request } from "express";
 // import { ExtractJwt } from "passport-jwt";
 
