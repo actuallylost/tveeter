@@ -13,7 +13,6 @@ export class AuthController {
 	// POST localhost:3000/api/v1/auth/register
 	@Post("register")
 	async register(@Body() body: RegisterDto) {
-		console.log("boop");
 		this.logger.debug("register method called");
 		const registerInfo = await this.authService.register(
 			body.username,

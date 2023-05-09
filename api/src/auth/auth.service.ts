@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import { HttpException, Injectable, Logger } from "@nestjs/common";
 import { SupabaseClient } from "@supabase/supabase-js";
 
@@ -19,11 +18,12 @@ export class AuthService {
 		this.supabase = this.supabaseService.getClient();
 	}
 
-	async register(username: string, email: string, password: string): Promise<User | null> {
+	async register(
+		username: string,
+		email: string,
+		password: string,
+	): Promise<{ accessToken: string }> {
 		this.logger.debug(
-			`Auth service register method called with username: ${username}, email: ${email}`,
-		);
-		console.log(
 			`Auth service register method called with username: ${username}, email: ${email}`,
 		);
 
@@ -34,8 +34,13 @@ export class AuthService {
 
 		this.logger.debug(`Supabase auth response data: ${JSON.stringify(data)}`);
 
-		if (data.user === null) {
-			this.logger.error("Failed to register user - User data is null");
+		if (data.user === null || data.user.email === undefined) {
+			this.logger.error("Failed to register user");
+			throw new HttpException({}, 400); // Bad Request
+		}
+
+		if (data.session === null || data.session.access_token === undefined) {
+			this.logger.error("Failed to register user - Session is null");
 			throw new HttpException({}, 400); // Bad Request
 		}
 
@@ -43,15 +48,14 @@ export class AuthService {
 			throw this.logger.error(error);
 		}
 
-		const newUser: User = {
+		await this.usersService.createUser({
 			id: this.snowflakeGen.generate().toBigInt(),
-			email: data.user.email || "",
+			email: data.user.email,
 			username: username,
 			password: password,
-			createdAt: new Date(Date.now()),
-		};
+		});
 
-		return await this.usersService.createUser(newUser);
+		return { accessToken: data.session.access_token };
 	}
 
 	async login(email: string, password: string) {
@@ -59,7 +63,6 @@ export class AuthService {
 			email,
 			password,
 		});
-		console.log(data);
 
 		if (data === null) {
 			this.logger.error("Failed to login user - Data is null");
