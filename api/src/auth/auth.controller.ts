@@ -12,11 +12,10 @@ export class AuthController {
 	private logger = new Logger(AuthController.name);
 	constructor(private readonly authService: AuthService) {}
 
-	// POST localhost:3000/auth/register
+	// POST localhost:3000/api/v1/auth/register
 	@Post("register")
 	async register(@Body() body: RegisterDto) {
 		this.logger.debug("register method called");
-		console.log("register works and is passed");
 		const registerInfo = await this.authService.register(
 			body.username,
 			body.email,
@@ -30,7 +29,7 @@ export class AuthController {
 		return registerInfo;
 	}
 
-	// POST localhost:3000/auth/login
+	// POST localhost:3000/api/v1/auth/login
 	@Post("login")
 	async login(@Body() body: LoginDto) {
 		const loginInfo = await this.authService.login(body.email, body.password);
@@ -41,7 +40,7 @@ export class AuthController {
 		return loginInfo;
 	}
 
-	// POST localhost:3000/auth/logout
+	// POST localhost:3000/api/v1/auth/logout
 	@Post("logout")
 	async logout() {
 		return await this.authService.logout();

@@ -8,13 +8,13 @@ import { UsersService } from "./users.service";
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
-	// GET localhost:3000/users
+	// GET localhost:3000/api/v1/users
 	@Get("/")
 	async getUsers() {
 		return await this.usersService.getUsers();
 	}
 
-	// GET localhost:3000/users/:id
+	// GET localhost:3000/api/v1/users/:id
 	@Get("/:id")
 	async getUser(@Param("id") id: string) {
 		const userId = parseId(id);
@@ -26,7 +26,7 @@ export class UsersController {
 		return user;
 	}
 
-	// GET localhost:3000/users/:id/messages
+	// GET localhost:3000/api/v1/users/:id/messages
 	@Get("/:id/messages")
 	async getUserMessages(@Param("id") id: string) {
 		const userId = parseId(id);
@@ -38,7 +38,7 @@ export class UsersController {
 		return await this.usersService.getUserMessages(userId);
 	}
 
-	// PUT localhost:3000/users/:id
+	// PUT localhost:3000/api/v1/users/:id
 	@Post("/:id")
 	async createUser(@Param() id: string, @Body() { username, email, password }: CreateUserDto) {
 		return await this.usersService.createUser({
@@ -49,7 +49,7 @@ export class UsersController {
 		});
 	}
 
-	// DELETE localhost:3000/users/:id
+	// DELETE localhost:3000/api/v1/users/:id
 	@Delete("/:id")
 	async deleteUser(@Param("id") id: string) {
 		return await this.usersService.deleteUser(parseId(id));

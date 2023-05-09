@@ -21,13 +21,13 @@ export class ChannelsController {
 
 	constructor(private readonly channelsService: ChannelsService) {}
 
-	// GET localhost:3000/channels
+	// GET localhost:3000/api/v1/channels
 	@Get("/")
 	async getChannels() {
 		return await this.channelsService.getChannels();
 	}
 
-	// GET localhost:3000/channels/:id
+	// GET localhost:3000/api/v1/channels/:id
 	@Get("/:id")
 	async getChannel(@Param("id") id: string) {
 		const channel = await this.channelsService.getChannel(parseId(id));
@@ -38,7 +38,7 @@ export class ChannelsController {
 		return channel;
 	}
 
-	// GET localhost:3000/channels/:id/users
+	// GET localhost:3000/api/v1/channels/:id/users
 	@Get("/:id/users")
 	async getChannelUsers(@Param("id") id: string) {
 		const channel = await this.channelsService.getChannel(parseId(id));
@@ -49,13 +49,13 @@ export class ChannelsController {
 		return await this.channelsService.getChannelUsers(parseId(id));
 	}
 
-	// PUT localhost:3000/channels/:id
+	// PUT localhost:3000/api/v1/channels/:id
 	@Post("/:id")
 	async createChannel(@Param("id") id: string) {
 		return await this.channelsService.createChannel(parseId(id));
 	}
 
-	// DELETE localhost:3000/channels/:id
+	// DELETE localhost:3000/api/v1/channels/:id
 	@Delete("/:id")
 	async deleteChannel(@Param("id") id: string) {
 		const channel = await this.channelsService.getChannel(parseId(id));
