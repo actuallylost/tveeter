@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, Param, Post } from "@nestjs/common";
 
 import { CreateUserDto } from "./dto/create-user.dto";
+import { parseId } from "src/common/util/parseId";
 import { UsersService } from "./users.service";
 
 @Controller("users")
@@ -16,27 +17,41 @@ export class UsersController {
 	// GET localhost:3000/users/:id
 	@Get("/:id")
 	async getUser(@Param("id") id: string) {
-		return await this.usersService.getUser(parseInt(id));
+		const userId = parseId(id);
+		const user = await this.usersService.getUser(userId);
+		if (user === null) {
+			throw new HttpException({}, 404);
+		}
+
+		return user;
 	}
 
 	// GET localhost:3000/users/:id/messages
 	@Get("/:id/messages")
 	async getUserMessages(@Param("id") id: string) {
-		return await this.usersService.getUserMessages(parseInt(id));
+		const userId = parseId(id);
+		const user = await this.usersService.getUser(userId);
+		if (user === null) {
+			throw new HttpException({}, 404);
+		}
+
+		return await this.usersService.getUserMessages(userId);
 	}
 
 	// PUT localhost:3000/users/:id
 	@Post("/:id")
-	async createUser(@Param() id: string, @Body() { username }: CreateUserDto) {
+	async createUser(@Param() id: string, @Body() { username, email, password }: CreateUserDto) {
 		return await this.usersService.createUser({
-			id: parseInt(id),
+			id: parseId(id),
 			username: username,
+			email: email,
+			password: password,
 		});
 	}
 
 	// DELETE localhost:3000/users/:id
 	@Delete("/:id")
 	async deleteUser(@Param("id") id: string) {
-		return await this.usersService.deleteUser(parseInt(id));
+		return await this.usersService.deleteUser(parseId(id));
 	}
 }
