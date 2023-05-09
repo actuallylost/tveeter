@@ -1,7 +1,7 @@
 import { Body, Controller, HttpException, Post, UseGuards } from "@nestjs/common";
 
 import { AuthService } from "./auth.service";
-import { SupabaseGuard } from "src/common/supabase";
+import { SupabaseGuard } from "../common/supabase";
 
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";

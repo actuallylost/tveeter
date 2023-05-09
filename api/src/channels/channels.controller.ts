@@ -8,7 +8,7 @@ import {
 	HttpException,
 	Logger,
 	Param,
-	Put,
+	Post,
 	UseFilters,
 } from "@nestjs/common";
 
@@ -50,7 +50,7 @@ export class ChannelsController {
 	}
 
 	// PUT localhost:3000/channels/:id
-	@Put("/:id")
+	@Post("/:id")
 	async createChannel(@Param("id") id: string) {
 		return await this.channelsService.createChannel(parseId(id));
 	}

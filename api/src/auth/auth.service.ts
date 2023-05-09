@@ -27,7 +27,7 @@ export class AuthService {
 		});
 
 		if (data.user === null) {
-			this.logger.error("Failed to register user - Data is null");
+			this.logger.error("Failed to register user - User data is null");
 			throw new HttpException({}, 400); // Bad Request
 		}
 
