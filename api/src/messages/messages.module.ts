@@ -5,9 +5,10 @@ import { Module } from "@nestjs/common";
 
 import { MessagesController } from "./messages.controller";
 import { MessagesService } from "./messages.service";
+import { SnowflakeService } from "src/common/services/snowflake.service";
 
 @Module({
 	controllers: [MessagesController],
-	providers: [MessagesService, ChannelsService, PrismaService],
+	providers: [MessagesService, ChannelsService, PrismaService, SnowflakeService],
 })
 export class MessagesModule {}
