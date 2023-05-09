@@ -7,7 +7,7 @@ import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 
 @Controller("auth")
-@UseGuards(SupabaseGuard)
+// @UseGuards(SupabaseGuard)
 export class AuthController {
 	private logger = new Logger(AuthController.name);
 	constructor(private readonly authService: AuthService) {}
@@ -16,6 +16,7 @@ export class AuthController {
 	@Post("register")
 	async register(@Body() body: RegisterDto) {
 		this.logger.debug("register method called");
+		console.log("register works and is passed");
 		const registerInfo = await this.authService.register(
 			body.username,
 			body.email,
