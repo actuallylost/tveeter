@@ -1,8 +1,6 @@
-import { Body, Controller, HttpException, Logger, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, HttpException, Logger, Post } from "@nestjs/common";
 
 import { AuthService } from "./auth.service";
-import { SupabaseGuard } from "../common/supabase";
-
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 
@@ -15,6 +13,7 @@ export class AuthController {
 	// POST localhost:3000/api/v1/auth/register
 	@Post("register")
 	async register(@Body() body: RegisterDto) {
+		console.log("boop");
 		this.logger.debug("register method called");
 		const registerInfo = await this.authService.register(
 			body.username,
