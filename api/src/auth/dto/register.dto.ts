@@ -1,21 +1,22 @@
 import { IsDefined, IsEmail, IsString, IsStrongPassword } from "class-validator";
 
-export class CreateUserDto {
-	@IsString()
+export class RegisterDto {
 	@IsDefined()
+	@IsString()
 	username!: string;
 
-	@IsString()
+	@IsDefined()
 	@IsEmail()
 	email!: string;
 
+	@IsDefined()
 	@IsString()
 	@IsStrongPassword({
 		minLength: 8,
-		minLowercase: 1,
-		minUppercase: 1,
-		minNumbers: 1,
 		minSymbols: 1,
+		minNumbers: 1,
+		minUppercase: 1,
+		minLowercase: 1,
 	})
 	password!: string;
 }

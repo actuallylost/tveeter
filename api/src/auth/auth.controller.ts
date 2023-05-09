@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
 import { LoginDto } from "./dto/login.dto";
-import { SignInDto } from "./dto/signin.dto";
+import { RegisterDto } from "./dto/register.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -10,7 +10,7 @@ export class AuthController {
 	}
 
 	@Post("register")
-	async register(@Body() body: SignInDto) {
+	async register(@Body() body: RegisterDto) {
 		// TODO: implement
 	}
 

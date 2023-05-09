@@ -5,6 +5,7 @@ import { Injectable } from "@nestjs/common";
 import { Message } from "@prisma/client";
 
 class CreateMessageOptions {
+	id!: bigint;
 	authorId!: bigint;
 	channelId!: bigint;
 	content!: string;
