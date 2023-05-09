@@ -1,30 +1,35 @@
 import { User } from "@prisma/client";
 import { HttpException, Injectable, Logger } from "@nestjs/common";
-import { SupabaseClient, createClient } from "@supabase/supabase-js";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 import { UsersService } from "../users";
+import { SupabaseService } from "../common/supabase/supabase.service";
 import { SnowflakeService } from "../common/services/snowflake.service";
 
 @Injectable()
 export class AuthService {
-	private supabase: SupabaseClient;
 	private readonly logger = new Logger(AuthService.name);
+	private supabase: SupabaseClient;
 
-	constructor(private snowflakeGen: SnowflakeService, private usersService: UsersService) {
-		if (!process.env.SUPABASE_URL || !process.env.SUPABASE_API_KEY) {
-			throw this.logger.error(
-				"Missing SUPABASE_URL or SUPABASE_API_KEY environment variable",
-			);
-		}
-
-		this.supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
+	constructor(
+		private usersService: UsersService,
+		private supabaseService: SupabaseService,
+		private snowflakeGen: SnowflakeService,
+	) {
+		this.supabase = this.supabaseService.getClient();
 	}
 
 	async register(username: string, email: string, password: string): Promise<User | null> {
+		this.logger.debug(
+			`Auth service register method called with username: ${username}, email: ${email}`,
+		);
+
 		const { data, error } = await this.supabase.auth.signUp({
 			email,
 			password,
 		});
+
+		this.logger.debug(`Supabase auth response data: ${JSON.stringify(data)}`);
 
 		if (data.user === null) {
 			this.logger.error("Failed to register user - User data is null");
