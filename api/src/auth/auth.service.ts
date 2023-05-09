@@ -23,6 +23,9 @@ export class AuthService {
 		this.logger.debug(
 			`Auth service register method called with username: ${username}, email: ${email}`,
 		);
+		console.log(
+			`Auth service register method called with username: ${username}, email: ${email}`,
+		);
 
 		const { data, error } = await this.supabase.auth.signUp({
 			email,
@@ -56,6 +59,7 @@ export class AuthService {
 			email,
 			password,
 		});
+		console.log(data);
 
 		if (data === null) {
 			this.logger.error("Failed to login user - Data is null");

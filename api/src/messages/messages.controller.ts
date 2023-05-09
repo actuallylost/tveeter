@@ -24,7 +24,7 @@ export class MessagesController {
 		private readonly channelsService: ChannelsService,
 	) {}
 
-	// GET localhost:3000/channels/:id/messages
+	// GET localhost:3000/api/v1/channels/:id/messages
 	@Get("/")
 	async getMessagesByChannelId(@Param("id") id: string) {
 		const parsedChannelId = parseId(id);
@@ -38,9 +38,9 @@ export class MessagesController {
 	}
 
 	// TODO: Implement
-	// GET localhost:3000/channels/:id/messages/:userId
+	// GET localhost:3000/api/v1/channels/:id/messages/:userId
 
-	// GET localhost:3000/channels/:id/messages/:messageId
+	// GET localhost:3000/api/v1/channels/:id/messages/:messageId
 	@Get("/:messageId")
 	async getMessageById(@Param("id") id: string, @Param("messageId") messageId: string) {
 		const parsedChannelId = parseId(id);
@@ -59,7 +59,7 @@ export class MessagesController {
 		return message;
 	}
 
-	// POST localhost:3000/channels/:id/messages
+	// POST localhost:3000/api/v1/channels/:id/messages
 	@Post("/")
 	async createMessage(@Param("id") channelId: string, @Body() { content }: CreateMessageDto) {
 		// TODO: Fetch authorId from supabase
@@ -71,7 +71,7 @@ export class MessagesController {
 		});
 	}
 
-	// DELETE localhost:3000/channels/:id/messages/:messageId
+	// DELETE localhost:3000/api/v1/channels/:id/messages/:messageId
 	@Delete("/:messageId")
 	async deleteMessage(@Param("id") id: string, @Param("messageId") messageId: string) {
 		return await this.messagesService.deleteMessage(parseId(id), parseId(messageId));

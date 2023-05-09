@@ -4,6 +4,8 @@ import { AppModule } from "./app.module";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
+	app.useLogger(["error", "warn", "log", "debug", "verbose"]);
+	app.setGlobalPrefix("api/v1");
 
 	await app.listen(3000);
 }
