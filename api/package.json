@@ -28,6 +28,7 @@
 		"@supabase/supabase-js": "^2.21.0",
 		"bcrypt": "^5.1.0",
 		"class-validator": "^0.14.0",
+		"nestjs-supabase-auth": "^1.0.9",
 		"passport": "^0.6.0",
 		"passport-jwt": "^4.0.1",
 		"reflect-metadata": "^0.1.13",
