@@ -45,7 +45,6 @@ export class AuthService {
 			id: this.snowflakeGen.generate().toBigInt(),
 			email: registerData.user.email,
 			username: username,
-			password: password,
 		});
 
 		return registerData.user;

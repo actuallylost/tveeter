@@ -51,12 +51,11 @@ export class UsersController {
 
 	// PUT localhost:3000/api/v1/users/:id
 	@Post("/:id")
-	async createUser(@Param() id: string, @Body() { username, email, password }: CreateUserDto) {
+	async createUser(@Param() id: string, @Body() { username, email }: CreateUserDto) {
 		return await this.usersService.createUser({
 			id: parseId(id),
 			username: username,
 			email: email,
-			password: password,
 		});
 	}
 
