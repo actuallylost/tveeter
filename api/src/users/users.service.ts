@@ -8,7 +8,6 @@ export interface CreateUserOptions {
 	id: bigint;
 	username: string;
 	email: string;
-	password: string;
 }
 
 @Injectable()
@@ -37,7 +36,6 @@ export class UsersService {
 				id: this.snowflakeGen.generate().toBigInt(),
 				username: options.username,
 				email: options.email,
-				password: options.password,
 			},
 		});
 	}

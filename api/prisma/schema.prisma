@@ -14,10 +14,14 @@ model User {
   id        BigInt              @id @db.BigInt
   email     String              @unique
   username  String              @unique
-  password  String
   createdAt DateTime            @default(now())
   messages  Message[]
   channels  ChannelMembership[]
+}
+
+model TempUser {
+  username String @unique
+  email    String @unique
 }
 
 model Channel {
@@ -38,10 +42,10 @@ model ChannelMembership {
 }
 
 model Message {
-  id        BigInt @db.BigInt
+  id        BigInt   @db.BigInt
   content   String
-  authorId  BigInt @db.BigInt
-  channelId BigInt @db.BigInt
+  authorId  BigInt   @db.BigInt
+  channelId BigInt   @db.BigInt
   createdAt DateTime @default(now())
 
   user    User    @relation(fields: [authorId], references: [id])
