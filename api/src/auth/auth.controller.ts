@@ -27,16 +27,20 @@ export class AuthController {
 		return registerInfo;
 	}
 
-	// POST localhost:3000/api/v1/auth/verify
-	@Post("verify")
-	async verify(@Body() body: { token: string }) {
-		const verifyInfo = await this.authService.verify();
-		if (verifyInfo === null) {
-			throw new HttpException({}, 400);
-		}
+	// TODO: Implement verify method when email confirmation is fixed in Supabase
+	// GET localhost:3000/api/v1/auth/verify
+	// @Get("verify")
+	// async verify(@Req() request: Request) {
+	// 	const accessToken = request.query.access_token as string;
+	// 	this.logger.debug(`verify method called with token: ${accessToken}`);
 
-		return verifyInfo;
-	}
+	// 	const verifyInfo = await this.authService.verify(accessToken);
+	// 	if (verifyInfo === null) {
+	// 		throw new HttpException({}, 400);
+	// 	}
+
+	// 	return verifyInfo;
+	// }
 
 	// POST localhost:3000/api/v1/auth/login
 	@Post("login")
