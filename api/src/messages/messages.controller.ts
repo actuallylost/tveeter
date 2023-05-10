@@ -11,13 +11,16 @@ import {
 	Param,
 	Post,
 	UseFilters,
+	UseGuards,
 } from "@nestjs/common";
 
 import { CreateMessageDto } from "./dto/create-message.dto";
 import { MessagesService } from "./messages.service";
+import { SupabaseGuard } from "src/common/supabase";
 
 @Controller("channels/:id/messages")
 @UseFilters(StandardExceptionFilter)
+// @UseGuards(SupabaseGuard)
 export class MessagesController {
 	constructor(
 		private readonly messagesService: MessagesService,

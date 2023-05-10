@@ -1,8 +1,18 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpException,
+	Param,
+	Post,
+	UseGuards,
+} from "@nestjs/common";
 
 import { CreateUserDto } from "./dto/create-user.dto";
 import { parseId } from "src/common/util/parseId";
 import { UsersService } from "./users.service";
+import { SupabaseGuard } from "src/common/supabase";
 
 @Controller("users")
 export class UsersController {
@@ -10,6 +20,7 @@ export class UsersController {
 
 	// GET localhost:3000/api/v1/users
 	@Get("/")
+	// @UseGuards(SupabaseGuard)
 	async getUsers() {
 		return await this.usersService.getUsers();
 	}
