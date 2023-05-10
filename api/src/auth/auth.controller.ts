@@ -27,6 +27,17 @@ export class AuthController {
 		return registerInfo;
 	}
 
+	// POST localhost:3000/api/v1/auth/verify
+	@Post("verify")
+	async verify(@Body() body: { token: string }) {
+		const verifyInfo = await this.authService.verify();
+		if (verifyInfo === null) {
+			throw new HttpException({}, 400);
+		}
+
+		return verifyInfo;
+	}
+
 	// POST localhost:3000/api/v1/auth/login
 	@Post("login")
 	async login(@Body() body: LoginDto) {
