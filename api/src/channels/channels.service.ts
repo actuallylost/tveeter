@@ -2,10 +2,11 @@ import { PrismaService } from "src/common/services/prisma.service";
 
 import { Injectable } from "@nestjs/common";
 import { Channel, User } from "@prisma/client";
+import { SnowflakeService } from "src/common/services/snowflake.service";
 
 @Injectable()
 export class ChannelsService {
-	constructor(private prisma: PrismaService) {}
+	constructor(private prisma: PrismaService, private snowflakeGen: SnowflakeService) {}
 
 	async getChannels(): Promise<Channel[]> {
 		return await this.prisma.channel.findMany();
@@ -29,11 +30,11 @@ export class ChannelsService {
 		});
 	}
 
-	async createChannel(id: bigint): Promise<Channel> {
+	async createChannel(): Promise<Channel> {
 		// Fetch all users
 		const users = await this.prisma.user.findMany();
 		const channel = await this.prisma.channel.create({
-			data: { id },
+			data: { id: this.snowflakeGen.generate().toBigInt() },
 		});
 
 		// Create a ChannelMembership entry for all users

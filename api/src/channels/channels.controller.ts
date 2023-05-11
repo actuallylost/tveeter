@@ -49,10 +49,10 @@ export class ChannelsController {
 		return await this.channelsService.getChannelUsers(parseId(id));
 	}
 
-	// PUT localhost:3000/api/v1/channels/:id
-	@Post("/:id")
-	async createChannel(@Param("id") id: string) {
-		return await this.channelsService.createChannel(parseId(id));
+	// POST localhost:3000/api/v1/channels/
+	@Post("/")
+	async createChannel() {
+		return await this.channelsService.createChannel();
 	}
 
 	// DELETE localhost:3000/api/v1/channels/:id
