@@ -1,19 +1,23 @@
-import { PrismaService } from "src/common/services/prisma.service";
-import { SnowflakeService } from "src/common/services/snowflake.service";
+import { EventsGateway } from "../events";
+import { PrismaService } from "../common/services/prisma.service";
+import { SnowflakeService } from "../common/services/snowflake.service";
 
 import { Injectable } from "@nestjs/common";
 import { Message } from "@prisma/client";
 
-class CreateMessageOptions {
-	id!: bigint;
-	authorId!: bigint;
-	channelId!: bigint;
-	content!: string;
+interface CreateMessageOptions {
+	authorId: bigint;
+	channelId: bigint;
+	content: string;
 }
 
 @Injectable()
 export class MessagesService {
-	constructor(private prisma: PrismaService, private snowflakeGen: SnowflakeService) {}
+	constructor(
+		private prisma: PrismaService,
+		private snowflakeGen: SnowflakeService,
+		private eventsGateway: EventsGateway,
+	) {}
 
 	async getMessagesByChannelId(id: bigint): Promise<Message[]> {
 		return await this.prisma.message.findMany({
@@ -31,7 +35,11 @@ export class MessagesService {
 	}
 
 	async createMessage(options: CreateMessageOptions): Promise<Message> {
-		return await this.prisma.message.create({
+		if (!(await this.prisma.user.findUnique({ where: { id: options.authorId } }))) {
+			throw new Error("Cannot send message for non-existent author");
+		}
+
+		const newMessage = await this.prisma.message.create({
 			data: {
 				id: this.snowflakeGen.generate().toBigInt(),
 				authorId: options.authorId,
@@ -39,6 +47,10 @@ export class MessagesService {
 				content: options.content,
 			},
 		});
+
+		await this.eventsGateway.sendMessage(newMessage);
+
+		return newMessage;
 	}
 
 	async deleteMessage(channelId: bigint, messageId: bigint): Promise<Message> {

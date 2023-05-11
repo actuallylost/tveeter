@@ -1,14 +1,15 @@
-import { ChannelsService } from "src/channels";
-import { PrismaService } from "src/common/services/prisma.service";
+import { ChannelsService } from "../channels";
+import { PrismaService } from "../common/services/prisma.service";
 
 import { Module } from "@nestjs/common";
 
+import { SnowflakeService } from "../common/services/snowflake.service";
 import { MessagesController } from "./messages.controller";
 import { MessagesService } from "./messages.service";
-import { SnowflakeService } from "src/common/services/snowflake.service";
+import { EventsGateway } from "../events";
 
 @Module({
 	controllers: [MessagesController],
-	providers: [MessagesService, ChannelsService, PrismaService, SnowflakeService],
+	providers: [MessagesService, ChannelsService, PrismaService, SnowflakeService, EventsGateway],
 })
 export class MessagesModule {}
