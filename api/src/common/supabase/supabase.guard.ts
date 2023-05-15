@@ -16,6 +16,9 @@ export class SupabaseGuard implements CanActivate {
 			return false;
 		}
 
-		return this.supabase.auth.getUser(token).then((v) => v.error != null, false);
+		return this.supabase.auth.getUser(token).then(
+			(session) => session.error != null,
+			() => false,
+		);
 	}
 }

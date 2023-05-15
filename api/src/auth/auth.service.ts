@@ -1,6 +1,5 @@
 import { HttpException, Injectable, Logger } from "@nestjs/common";
-import { SupabaseClient, User } from "@supabase/supabase-js";
-import { User as DatabaseUser } from "@prisma/client";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 import { UsersService } from "../users";
 import { PrismaService } from "../common/services/prisma.service";
@@ -18,7 +17,7 @@ export class AuthService {
 		private snowflakeGen: SnowflakeService,
 		private supabaseService: SupabaseService,
 	) {
-		this.supabase = this.supabaseService.getClient();
+		this.supabase = this.supabaseService;
 	}
 
 	async register(
