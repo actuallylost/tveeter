@@ -4,7 +4,7 @@ import { User as DatabaseUser } from "@prisma/client";
 
 import { UsersService } from "../users";
 import { PrismaService } from "../common/services/prisma.service";
-import { SupabaseService } from "../common/supabase/supabase.service";
+import SupabaseService from "../common/supabase/supabase.service";
 import { SnowflakeService } from "../common/services/snowflake.service";
 
 @Injectable()

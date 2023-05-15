@@ -1,15 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { SupaClient } from "./supaclient";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
-export class SupabaseService {
-	private supabaseClient: ReturnType<SupaClient["createSupabaseClient"]>;
-
-	constructor(private readonly supaClient: SupaClient) {
-		this.supabaseClient = supaClient.createSupabaseClient();
-	}
-
-	getClient(): ReturnType<SupaClient["createSupabaseClient"]> {
-		return this.supabaseClient;
+export default class SupabaseService extends SupabaseClient {
+	constructor(private readonly configService: ConfigService) {
+		super(configService.getOrThrow("apiUrl"), configService.getOrThrow("apiKey"), {
+			auth: {
+				autoRefreshToken: false,
+				persistSession: false,
+				detectSessionInUrl: false,
+			},
+		});
 	}
 }
