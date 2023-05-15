@@ -27,6 +27,7 @@
 		"@nestjs/platform-socket.io": "^9.4.0",
 		"@nestjs/websockets": "^9.4.0",
 		"@prisma/client": "4.13.0",
+		"@sapphire/result": "^2.6.4",
 		"@supabase/supabase-js": "^2.21.0",
 		"class-validator": "^0.14.0",
 		"nestjs-supabase-auth": "^1.0.9",
