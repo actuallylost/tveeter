@@ -1,7 +1,7 @@
 export const config = {
 	db: {
 		dbProvider: process.env.DATABASE_PROVIDER,
-		dbUrl: process.env.DATABASE_DEV_URL,
+		dbUrl: process.env.DATABASE_URL,
 	},
 	supabase: {
 		apiUrl: process.env.SUPABASE_URL,
