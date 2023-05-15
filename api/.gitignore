@@ -131,3 +131,5 @@ dist
 
 .DS_Store
 .env
+src/config/envs/development.ts
+src/config/envs/production.ts
