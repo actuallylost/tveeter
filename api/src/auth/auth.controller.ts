@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, Logger, Post } from "@nestjs/common";
+import { Body, Controller, HttpException, HttpStatus, Logger, Post, Query } from "@nestjs/common";
 
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/login.dto";
@@ -13,34 +13,33 @@ export class AuthController {
 	// POST localhost:3000/api/v1/auth/register
 	@Post("register")
 	async register(@Body() body: RegisterDto) {
-		this.logger.debug("register method called");
-		const registerInfo = await this.authService.register(
-			body.username,
-			body.email,
-			body.password,
-		);
-		if (registerInfo === null) {
-			this.logger.debug("registerInfo is null");
+		try {
+			const result = await this.authService.register(
+				body.username,
+				body.email,
+				body.password,
+			);
+			if (result.isErr()) {
+				throw new HttpException({ code: result.unwrapErr() }, HttpStatus.FORBIDDEN);
+			}
+			return result.unwrap();
+		} catch (err) {
+			this.logger.error(err);
+			throw new HttpException({ message: "Internal Server Error" }, 500);
+		}
+	}
+
+	// POST localhost:3000/api/v1/auth/verify
+	@Post("verify")
+	async verify(@Query() query: Record<string, string>) {
+		const accessToken = query.access_token as string;
+		const verifyInfo = await this.authService.verify(accessToken);
+		if (verifyInfo === null) {
 			throw new HttpException({}, 400);
 		}
 
-		return registerInfo;
+		return verifyInfo;
 	}
-
-	// TODO: Implement verify method when email confirmation is fixed in Supabase
-	// GET localhost:3000/api/v1/auth/verify
-	// @Get("verify")
-	// async verify(@Req() request: Request) {
-	// 	const accessToken = request.query.access_token as string;
-	// 	this.logger.debug(`verify method called with token: ${accessToken}`);
-
-	// 	const verifyInfo = await this.authService.verify(accessToken);
-	// 	if (verifyInfo === null) {
-	// 		throw new HttpException({}, 400);
-	// 	}
-
-	// 	return verifyInfo;
-	// }
 
 	// POST localhost:3000/api/v1/auth/login
 	@Post("login")
