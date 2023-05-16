@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { VStack } from "../common/Stack";
+import { VStack } from "@/styles";
 
 export const StyledUsername = styled.span`
 	font-weight: bold;

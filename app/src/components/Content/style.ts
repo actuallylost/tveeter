@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { VStack } from "../common/Stack";
+import { VStack } from "@/styles";
 
 export const StyledContent = styled(VStack)`
 	// The god solution for all problems in life is flex-grow: 1
@@ -13,8 +13,10 @@ export const StyledContent = styled(VStack)`
 
 	flex: none;
 	flex-grow: 1;
+	overflow-y: scroll;
 	order: 0;
 
 	box-sizing: border-box;
 	width: 100%;
+	max-height: 583px;
 `;

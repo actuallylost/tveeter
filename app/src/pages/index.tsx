@@ -2,14 +2,13 @@
 import React, { useState } from "react";
 
 // Styles
-import { GlobalStyles } from "./components/common/GlobalStyles";
-import { Content } from "./components/Content";
-import { Footer } from "./components/Footer";
-import { StyledButton, StyledInput } from "./components/Footer/style";
-import { Header } from "./components/Header";
-import { Message } from "./components/Message";
+import { Content } from "@/components/Content";
+import { Footer } from "@/components/Footer";
+import { StyledButton, StyledInput } from "@/components/Footer/style";
+import { Header } from "@/components/Header";
+import { Message } from "@/components/Message";
 // Components
-import { Wrapper } from "./components/Wrapper";
+import { Wrapper } from "@/components/Wrapper";
 
 const App = () => {
 	const [msg, setMsg] = useState<string>("");
@@ -19,7 +18,6 @@ const App = () => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMsg(event.target.value);
 	};
-
 	const handleKeyDown = (event: React.KeyboardEvent) => {
 		if (event.key === "Enter") {
 			handleSubmit(event);
@@ -35,12 +33,12 @@ const App = () => {
 	};
 	return (
 		<>
-			<GlobalStyles />
+			<title>Tveeter Web | Chat</title>
 			<Wrapper>
-				<Header>Tveeter | Username</Header>
+				<Header>Tveeter | UsernameValueHere</Header>
 				<Content>
 					{messages.map((message, index) => (
-						<Message username="Username" key={index}>
+						<Message username="UsernameValueHere" key={index}>
 							{message}
 						</Message>
 					))}

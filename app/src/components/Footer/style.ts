@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { HStack } from "../common/Stack";
+import { HStack } from "@/styles";
 
 export const StyledFooter = styled(HStack)`
 	display: flex;
