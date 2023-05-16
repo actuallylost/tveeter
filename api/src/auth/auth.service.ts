@@ -1,6 +1,7 @@
 import { HttpException, Injectable, Logger } from "@nestjs/common";
+import { SupabaseClient, User } from "@supabase/supabase-js";
+import { User as DatabaseUser } from "@prisma/client";
 import { err, ok, Result } from "@sapphire/result";
-import { SupabaseClient } from "@supabase/supabase-js";
 
 import { PrismaService } from "../common/services/prisma.service";
 import { SnowflakeService } from "../common/services/snowflake.service";
