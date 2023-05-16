@@ -10,7 +10,7 @@ import { Message } from "@/components/Message";
 // Components
 import { Wrapper } from "@/components/Wrapper";
 
-const App = () => {
+const Home = () => {
 	const [msg, setMsg] = useState<string>("");
 	const [messages, setMessages] = useState<string[]>([]);
 
@@ -57,4 +57,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default Home;
