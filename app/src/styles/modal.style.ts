@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { HStack, VStack } from "@/styles";
 
-export const LoginWrapper = styled(VStack)`
+export const Wrapper = styled(VStack)`
 	width: 100vw;
 	height: 100vh;
 
@@ -9,7 +9,17 @@ export const LoginWrapper = styled(VStack)`
 	align-items: center;
 `;
 
-export const LoginContainer = styled(VStack)`
+export const Title = styled.h2`
+	margin-top: 16px;
+	margin-bottom: 32px;
+
+	font-size: 24px;
+	font-weight: 600;
+
+	color: white;
+`;
+
+export const Container = styled(VStack)`
 	width: 33.3%;
 	padding: 15px 15px 0;
 
@@ -17,7 +27,7 @@ export const LoginContainer = styled(VStack)`
 	background-color: rgba(28, 28, 28, 1);
 `;
 
-export const LoginButtonContainer = styled(HStack)`
+export const ButtonContainer = styled(HStack)`
 	justify-content: center;
 	align-items: center;
 	border-radius: 16px;
@@ -27,7 +37,7 @@ export const LoginButtonContainer = styled(HStack)`
 	background-color: rgba(28, 28, 28, 1);
 `;
 
-export const LoginInput = styled.input`
+export const Input = styled.input`
 	color: white;
 	background: #272727;
 	border-radius: 7px;
@@ -47,7 +57,7 @@ export const LoginInput = styled.input`
 	}
 `;
 
-export const LoginButton = styled.button`
+export const Button = styled.button`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

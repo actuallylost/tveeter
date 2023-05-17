@@ -1,6 +1,6 @@
 {
-	"name": "app-next",
-	"version": "0.1.0",
+	"name": "app",
+	"version": "0.0.8",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^2.21.0",
 		"@types/node": "18.11.18",
 		"@types/react": "^18.0.34",
 		"@types/react-dom": "^18.0.11",
@@ -17,6 +18,7 @@
 		"next": "13.4.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-error-boundary": "^4.0.4",
 		"styled-components": "^5.3.9",
 		"styled-system": "^5.1.5",
 		"typescript": "5.0.4"

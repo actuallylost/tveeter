@@ -1,14 +1,14 @@
 // React
 import React, { useState } from "react";
 
-// Styles
-import { Content } from "@/components/Content";
-import { Footer } from "@/components/Footer";
-import { StyledButton, StyledInput } from "@/components/Footer/style";
-import { Header } from "@/components/Header";
-import { Message } from "@/components/Message";
 // Components
-import { Wrapper } from "@/components/Wrapper";
+import { Wrapper } from "@/components";
+import { Header } from "@/components";
+import { Content } from "@/components";
+import { Message } from "@/components";
+import { Footer } from "@/components";
+// Styles
+import { StyledButton, StyledInput } from "@/components/Footer/style";
 
 const Home = () => {
 	const [msg, setMsg] = useState<string>("");
