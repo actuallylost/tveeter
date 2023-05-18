@@ -1,25 +1,23 @@
-import React, { createContext, useContext, useState } from "react";
-import { SupabaseClient, createClient } from "@supabase/supabase-js";
-import { useRouter } from "next/router";
-import { Title, Button, Container, Input, Wrapper, ButtonContainer } from "@/styles/modal.style";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-const AccessToken = createContext<string>("");
+import { useRouter } from "next/router";
+
+import { Title, Button, Container, Input, Wrapper, ButtonContainer } from "@/styles";
+import { supabaseLogin } from "@/common";
+import { login } from "@/redux";
 
 const Login = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
 
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const token = useContext(AccessToken);
 
 	if (!process.env.SUPABASE_URL || !process.env.SUPABASE_API_KEY) {
+		// TODO: Implement error toasts
 		router.push("/error");
 	}
-
-	const supabase: SupabaseClient = createClient(
-		process.env.SUPABASE_URL as string,
-		process.env.SUPABASE_API_KEY as string,
-	);
 
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
@@ -31,36 +29,8 @@ const Login = () => {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		const { data, error } = await supabase.auth.signInWithPassword({
-			email,
-			password,
-		});
-
-		if (error) {
-			console.error(error);
-			router.push("/error");
-		}
-
-		if (data.user === null) {
-			console.log(`User data: ${data.user}`);
-			console.error("Failed to login user - Data is null");
-			router.push("/error");
-		}
-
-		if (data.session === null || data.session.access_token === undefined) {
-			console.log(`Session: ${data.session} | Session Token: ${data.session?.access_token}`);
-			console.error("Failed to register user - Session is null");
-			router.push("/error");
-		}
-
-		console.log(`Supabase access token: ${data.session?.access_token}`);
-		router.push("/");
-
-		return (
-			<AccessToken.Provider
-				value={token === "" ? (data.session?.access_token as string) : token}
-			></AccessToken.Provider>
-		);
+		const { accessToken } = await supabaseLogin(email, password);
+		dispatch(login({ accessToken }));
 	};
 
 	return (

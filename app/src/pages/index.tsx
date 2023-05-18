@@ -7,6 +7,7 @@ import { Header } from "@/components";
 import { Content } from "@/components";
 import { Message } from "@/components";
 import { Footer } from "@/components";
+
 // Styles
 import { StyledButton, StyledInput } from "@/components/Footer/style";
 
