@@ -7,8 +7,10 @@ import { SnowflakeService } from "../common/services/snowflake.service";
 import { MessagesController } from "./messages.controller";
 import { MessagesService } from "./messages.service";
 import { EventsGateway } from "../events";
+import { SupabaseModule } from "src/common/supabase";
 
 @Module({
+	imports: [SupabaseModule],
 	controllers: [MessagesController],
 	providers: [MessagesService, ChannelsService, PrismaService, SnowflakeService, EventsGateway],
 })

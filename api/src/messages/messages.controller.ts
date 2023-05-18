@@ -20,7 +20,7 @@ import { SupabaseGuard } from "src/common/supabase";
 
 @Controller("channels/:id/messages")
 @UseFilters(StandardExceptionFilter)
-// @UseGuards(SupabaseGuard)
+@UseGuards(SupabaseGuard)
 export class MessagesController {
 	constructor(
 		private readonly messagesService: MessagesService,

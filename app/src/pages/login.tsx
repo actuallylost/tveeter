@@ -44,6 +44,7 @@ const Login = () => {
 						required
 					/>
 					<Input
+						type="password"
 						onChange={handlePasswordChange}
 						placeholder="Enter your password..."
 						required

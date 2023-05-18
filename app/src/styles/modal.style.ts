@@ -40,12 +40,12 @@ export const ButtonContainer = styled(HStack)`
 export const Input = styled.input`
 	color: white;
 	background: #272727;
-	border-radius: 7px;
+	border-radius: 8px;
 	flex-grow: 1;
 
 	padding: 0 16px 0 16px;
 
-	height: 40px;
+	height: 35px;
 	border: none;
 
 	&:focus {
@@ -61,10 +61,11 @@ export const Button = styled.button`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: center;
 	padding: 16px;
 
 	width: 100%;
-	height: 50px;
+	height: 35px;
 	border: none;
 
 	font-weight: 600;

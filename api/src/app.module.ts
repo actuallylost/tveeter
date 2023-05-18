@@ -3,12 +3,11 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 // Modules
-import { SupabaseModule } from "./common/supabase";
+import { SupabaseGuard, SupabaseModule } from "./common/supabase";
 import { ChannelsModule } from "./channels";
 import { MessagesModule } from "./messages";
 import { EventsModule } from "./events";
 import { UsersModule } from "./users";
-import { AuthModule } from "./auth";
 import { configuration } from "./config";
 
 @Module({
@@ -20,9 +19,14 @@ import { configuration } from "./config";
 		UsersModule,
 		MessagesModule,
 		ChannelsModule,
-		AuthModule,
 		SupabaseModule,
 		EventsModule,
 	],
+	// providers: [
+	// 	{
+	// 		provide: "APP_GUARD",
+	// 		useClass: SupabaseGuard,
+	// 	},
+	// ],
 })
 export class AppModule {}

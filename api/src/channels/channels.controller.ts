@@ -10,12 +10,15 @@ import {
 	Param,
 	Post,
 	UseFilters,
+	UseGuards,
 } from "@nestjs/common";
 
 import { ChannelsService } from "./channels.service";
+import { SupabaseGuard } from "src/common/supabase";
 
 @Controller("channels")
 @UseFilters(StandardExceptionFilter)
+@UseGuards(SupabaseGuard)
 export class ChannelsController {
 	private readonly logger = new Logger(ChannelsController.name);
 

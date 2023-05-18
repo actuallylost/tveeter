@@ -6,6 +6,7 @@ import {
 	HttpException,
 	Param,
 	Post,
+	UseFilters,
 	UseGuards,
 } from "@nestjs/common";
 
@@ -13,14 +14,16 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { parseId } from "src/common/util/parseId";
 import { UsersService } from "./users.service";
 import { SupabaseGuard } from "src/common/supabase";
+import { StandardExceptionFilter } from "src/common/filters/standard.filter";
 
 @Controller("users")
+@UseFilters(StandardExceptionFilter)
+@UseGuards(SupabaseGuard)
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	// GET localhost:3000/api/v1/users
 	@Get("/")
-	// @UseGuards(SupabaseGuard)
 	async getUsers() {
 		return await this.usersService.getUsers();
 	}

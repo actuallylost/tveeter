@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Wrapper, Container, Input, ButtonContainer, Button } from "@/styles";
+import { Wrapper, Container, Input, ButtonContainer, Button, Title } from "@/styles";
 import { supabaseRegister } from "@/common";
 
 const Register = () => {
@@ -32,26 +32,28 @@ const Register = () => {
 			<title>Tveeter Web | Register</title>
 			<Wrapper>
 				<Container>
+					<Title>Tveeter Register</Title>
 					<Input
 						onChange={handleUsernameChange}
 						placeholder="Enter a username..."
 						required
-					></Input>
+					/>
 					<Input
 						onChange={handleEmailChange}
 						placeholder="Enter an email address..."
 						required
-					></Input>
+					/>
 					<Input
+						type="password"
 						onChange={handlePasswordChange}
-						placeholder="Enter a strong password"
+						placeholder="Enter a strong password..."
 						required
-					></Input>
+					/>
+					<ButtonContainer>
+						<Button onClick={() => router.push("/login")}>Login</Button>
+						<Button onClick={handleSubmit}>Register</Button>
+					</ButtonContainer>
 				</Container>
-				<ButtonContainer>
-					<Button onClick={() => router.push("/login")}>Login</Button>
-					<Button onClick={handleSubmit}>Register</Button>
-				</ButtonContainer>
 			</Wrapper>
 		</>
 	);
