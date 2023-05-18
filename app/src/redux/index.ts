@@ -1,3 +1,3 @@
-export * from "@/redux/store";
-export * from "@/redux/hooks";
-export * from "@/redux/slices";
+export * from "./slices";
+export * from "./store";
+export * from "./hooks";

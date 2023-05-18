@@ -1,10 +1,15 @@
 import { SupabaseClient, User, createClient } from "@supabase/supabase-js";
 
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_API_KEY) {
+	throw new Error("Missing SUPABASE_URL or SUPABASE_API_KEY");
+}
+
 const supabase: SupabaseClient = createClient(
-	process.env.SUPABASE_URL as string,
-	process.env.SUPABASE_API_KEY as string,
+	process.env.SUPABASE_URL,
+	process.env.SUPABASE_API_KEY,
 );
 
+// TODO: Implement error toasts for all of the below
 export const supabaseRegister = async (
 	username: string,
 	email: string,

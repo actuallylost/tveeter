@@ -1,1 +1,1 @@
-export * from "@/redux/slices/auth";
+export * from "./auth";
