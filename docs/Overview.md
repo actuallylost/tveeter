@@ -105,9 +105,9 @@ Tveeter is a web-application that allows you to communicate with others in real-
 	"messages": [
 		{
 			"id": 1234567890123456,
-			"user_id": 1234567890123456,
-			"channel_id": 1234567890123456,
 			"content": "hello world!",
+			"authorId": 1234567890123456,
+			"channelId": 1234567890123456,
 			"createdAt": "2023-05-10T13:38:37.865Z"
 		}
 	],
@@ -125,7 +125,31 @@ Tveeter is a web-application that allows you to communicate with others in real-
 ```json
 {
 	"id": 1234567890123456,
-	"createdAt": "2023-05-10T13:38:37.865Z"
+	"createdAt": "2023-05-10T13:38:37.865Z",
+	"messages": [
+		{
+			"id": 1234567890123456,
+			"content": "hello world!",
+			"authorId": 1234567890123456,
+			"channelId": 1234567890123456,
+			"createdAt": "2023-05-10T13:38:37.865Z"
+		}
+	],
+	"users": [
+		{
+			"userId": 1234567890123456,
+			"channelId": 1234567890123456
+		}
+	]
+}
+```
+
+#### ChannelMembership
+
+```json
+{
+	"userId": 1234567890123456,
+	"channelId": 1234567890123456
 }
 ```
 
@@ -134,11 +158,22 @@ Tveeter is a web-application that allows you to communicate with others in real-
 ```json
 {
 	"id": 1234567890123456,
-	"user_id": 1234567890123456,
-	"channel_id": 1234567890123456,
 	"content": "content",
+	"authorId": 1234567890123456,
+	"channelId": 1234567890123456,
 	"createdAt": "2023-05-10T13:38:37.865Z"
 }
 ```
 
-### **TODO**
+## TODO
+
+-   [x] Create a basic UI
+-   [x] Create the API endpoints
+-   [x] Create the database models
+-   [x] Create the authentication system
+-   [x] Create the login/register pages
+-   [x] Create the chat page
+-   [x] Implement login/register modals
+-   [ ] Implement websockets client side
+-   [ ] Implement login/register functionality
+-   [ ] Implement chat functionality
