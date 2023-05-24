@@ -13,6 +13,12 @@ Tveeter is a web-application that allows you to communicate with others in real-
 -   Chat box to type messages
 -   Send button
 
+#### Chat Functionality
+
+-   Send messages
+-   Receive messages in real-time
+-   Websocket connection
+
 ### Login
 
 -   Login Modal
@@ -20,6 +26,13 @@ Tveeter is a web-application that allows you to communicate with others in real-
     -   Password input
     -   Login button
     -   Register button that redirects to the register page
+
+#### Login Functionality
+
+-   Handle login details
+-   Pass them to supabase
+-   Once authenticated, redirect to the chat page
+-   Handle login errors through the UI (invalid email/password)
 
 ### Register
 
@@ -29,6 +42,16 @@ Tveeter is a web-application that allows you to communicate with others in real-
     -   Password input
     -   Register button
     -   Login button that redirects to the login page
+
+#### Register Functionality
+
+-   Handle register details
+-   Pass them to supabase
+-   Pass username to the database through the API
+-   Once email is verified, fetch the access token from the URL
+-   Store the access token in local storage
+-   Once authenticated, redirect to the chat page
+-   Handle register errors through the UI (invalid username/email/password)
 
 ## API
 
