@@ -18,7 +18,7 @@ To run the frontend you can use the following commands:
 ```bash
 cd app
 pnpm install
-pnpm next dev
+pnpm dev
 ```
 
 and for the backend:
