@@ -13,11 +13,6 @@ const Login = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 
-	if (!process.env.SUPABASE_URL || !process.env.SUPABASE_API_KEY) {
-		// TODO: Implement error toasts
-		router.push("/error");
-	}
-
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
 	};

@@ -55,6 +55,10 @@ Tveeter is a web-application that allows you to communicate with others in real-
 
 ## API
 
+### Functionality
+
+-   Responsible for the interactivity between the database and the client
+
 ### Endpoints
 
 #### Users

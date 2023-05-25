@@ -18,6 +18,12 @@ export const supabaseRegister = async (
 	const { data, error } = await supabase.auth.signUp({
 		email: email,
 		password: password,
+		options: {
+			data: {
+				username: username,
+			},
+			emailRedirectTo: "http://localhost:8080/login",
+		},
 	});
 
 	if (error) {
@@ -28,14 +34,7 @@ export const supabaseRegister = async (
 		console.log("No data returned");
 	}
 
-	await fetch("http://localhost:3000/api/v1/users", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ username, email }),
-	})
-		.then((res) => res.json())
-		.then((res) => console.log(res));
-
+	console.log(data.user);
 	return { user: data?.user as User };
 };
 

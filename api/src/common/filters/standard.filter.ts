@@ -20,6 +20,11 @@ const httpToStandard = (code: HttpStatus): StandardException => {
 				code: 0,
 				message: "Not found",
 			};
+		case HttpStatus.BAD_REQUEST:
+			return {
+				code: 1,
+				message: "Bad request",
+			};
 		default:
 			return {
 				code: -1,
