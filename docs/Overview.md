@@ -26,13 +26,8 @@ Tveeter is a web-application that allows you to communicate with others in real-
     -   Password input
     -   Login button
     -   Register button that redirects to the register page
-
-#### Login Functionality
-
--   Handle login details
--   Pass them to supabase
--   Once authenticated, redirect to the chat page
--   Handle login errors through the UI (invalid email/password)
+    -   Forgot email button that redirects to the forgot email page
+    -   Forgot password button that redirects to the forgot password page
 
 ### Register
 
