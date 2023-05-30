@@ -38,6 +38,27 @@ const Chat = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		const abortController = new AbortController();
+
+		fetch("http://localhost:3000/api/v1/channels/3601644075925504/messages", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			signal: abortController.signal,
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setMessages(data);
+			})
+			.catch((err) => console.log(err));
+
+		return () => {
+			abortController.abort();
+		};
+	}, []);
+
 	// Event Handlers
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMsg(event.target.value);
@@ -49,14 +70,15 @@ const Chat = () => {
 		}
 	};
 
-	const handleSubmit = (event: React.FormEvent) => {
+	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		if (msg !== "") {
-			fetch("http://localhost:3000/api/v1/channels/3601644075925504/messages/", {
+			await fetch("http://localhost:3000/api/v1/channels/3601644075925504/messages/", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
+				// TODO: Send username alongside content in JSON object
 				body: JSON.stringify({ content: msg }),
 			}).catch((err) => console.log(err));
 			setMsg("");
@@ -66,7 +88,7 @@ const Chat = () => {
 		<>
 			<title>Tveeter Web | Chat</title>
 			<Wrapper>
-				<Header>Tveeter | UsernameValueHere</Header>
+				<Header username="UsernameValueHere" />
 				<Content>
 					{messages.map((message, index) => (
 						<Message key={index} message={message} />

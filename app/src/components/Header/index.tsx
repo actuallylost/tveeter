@@ -1,10 +1,11 @@
 import React from "react";
+
 import { StyledHeader } from "./style";
 
 interface HeaderProps {
-	children?: React.ReactNode;
+	username: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ children }) => {
-	return <StyledHeader>{children}</StyledHeader>;
+export const Header: React.FC<HeaderProps> = ({ username }) => {
+	return <StyledHeader>Tveeter | {username}</StyledHeader>;
 };

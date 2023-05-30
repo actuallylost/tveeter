@@ -19,15 +19,37 @@ export class MessagesService {
 		private eventsGateway: EventsGateway,
 	) {}
 
-	async getMessagesByChannelId(id: bigint): Promise<Message[]> {
-		return await this.prisma.message.findMany({
-			where: { channelId: id },
-		});
+	async getRecentMessagesByChannelId(id: bigint): Promise<Message[]> {
+		return await this.prisma.message
+			.findMany({
+				orderBy: {
+					id: "desc",
+				},
+				where: { channelId: id },
+				take: 20,
+				include: {
+					user: true,
+				},
+			})
+			.then((messages) =>
+				messages.reverse().map((message) => ({
+					id: message.id,
+					content: message.content,
+					username: message.user.username,
+					authorId: message.authorId,
+					channelId: message.channelId,
+					createdAt: message.createdAt,
+				})),
+			);
 	}
 
-	async getMessagesByUserId(userId: bigint): Promise<Message[]> {
+	async getRecentMessagesByUserId(userId: bigint): Promise<Message[]> {
 		return await this.prisma.message.findMany({
+			orderBy: {
+				id: "desc",
+			},
 			where: { authorId: userId },
+			take: 20,
 		});
 	}
 

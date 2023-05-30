@@ -27,7 +27,7 @@ export class MessagesController {
 
 	// GET localhost:3000/api/v1/channels/:id/messages
 	@Get("/")
-	async getMessagesByChannelId(@Param("id") id: string) {
+	async getRecentMessagesByChannelId(@Param("id") id: string) {
 		const parsedChannelId = parseId(id);
 
 		const channel = await this.channelsService.getChannel(parsedChannelId);
@@ -35,13 +35,12 @@ export class MessagesController {
 			throw new HttpException({}, 404);
 		}
 
-		return await this.messagesService.getMessagesByChannelId(parsedChannelId);
+		return await this.messagesService.getRecentMessagesByChannelId(parsedChannelId);
 	}
 
-	// TODO: Implement
 	// GET localhost:3000/api/v1/channels/:id/messages/:userId
 	@Get("/:userId")
-	async getMessagesByUserId(@Param("id") id: string, @Param("userId") userId: string) {
+	async getRecentMessagesByUserId(@Param("id") id: string, @Param("userId") userId: string) {
 		const parsedChannelId = parseId(id);
 		const parsedUserId = parseId(userId);
 
@@ -50,7 +49,7 @@ export class MessagesController {
 			throw new HttpException({}, 404);
 		}
 
-		return await this.messagesService.getMessagesByUserId(parsedUserId);
+		return await this.messagesService.getRecentMessagesByUserId(parsedUserId);
 	}
 
 	// GET localhost:3000/api/v1/channels/:id/messages/:messageId
