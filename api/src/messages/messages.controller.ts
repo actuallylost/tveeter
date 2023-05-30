@@ -11,16 +11,14 @@ import {
 	Param,
 	Post,
 	UseFilters,
-	UseGuards,
 } from "@nestjs/common";
 
 import { CreateMessageDto } from "./dto/create-message.dto";
 import { MessagesService } from "./messages.service";
-import { SupabaseGuard } from "src/common/supabase";
 
 @Controller("channels/:id/messages")
 @UseFilters(StandardExceptionFilter)
-@UseGuards(SupabaseGuard)
+// @UseGuards(SupabaseGuard)
 export class MessagesController {
 	constructor(
 		private readonly messagesService: MessagesService,
@@ -42,6 +40,18 @@ export class MessagesController {
 
 	// TODO: Implement
 	// GET localhost:3000/api/v1/channels/:id/messages/:userId
+	@Get("/:userId")
+	async getMessagesByUserId(@Param("id") id: string, @Param("userId") userId: string) {
+		const parsedChannelId = parseId(id);
+		const parsedUserId = parseId(userId);
+
+		const channel = await this.channelsService.getChannel(parsedChannelId);
+		if (channel === null) {
+			throw new HttpException({}, 404);
+		}
+
+		return await this.messagesService.getMessagesByUserId(parsedUserId);
+	}
 
 	// GET localhost:3000/api/v1/channels/:id/messages/:messageId
 	@Get("/:messageId")

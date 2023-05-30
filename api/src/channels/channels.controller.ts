@@ -18,7 +18,7 @@ import { SupabaseGuard } from "src/common/supabase";
 
 @Controller("channels")
 @UseFilters(StandardExceptionFilter)
-@UseGuards(SupabaseGuard)
+// @UseGuards(SupabaseGuard)
 export class ChannelsController {
 	private readonly logger = new Logger(ChannelsController.name);
 
