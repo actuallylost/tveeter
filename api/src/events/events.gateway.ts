@@ -31,20 +31,9 @@ export class EventsGateway {
 	async sendMessage(message: Message, username: string) {
 		this.logger.log("Events gateway initialized");
 		try {
-			this.logger.debug(message);
+			this.logger.debug(message, username);
 
-			this.server.emit("events", { message, username });
-		} catch (error) {
-			this.logger.error(error);
-		}
-	}
-
-	async receiveMessage(message: Message) {
-		this.logger.log("Events gateway initialized");
-		try {
-			this.logger.debug(message);
-
-			this.server.emit("events", message);
+			this.server.emit("events", { ...message, username });
 		} catch (error) {
 			this.logger.error(error);
 		}

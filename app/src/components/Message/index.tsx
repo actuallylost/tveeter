@@ -1,17 +1,17 @@
-// import { useState } from "react";
-
-import { StyledUsername, StyledMessage } from "./style";
+import { StyledMessage, StyledUsername } from "./style";
 
 interface MessageProps {
-	username: string;
-	children?: React.ReactNode;
+	message: {
+		username: string;
+		content: string;
+	};
 }
 
-export const Message: React.FC<MessageProps> = ({ username, children }) => {
+export const Message: React.FC<MessageProps> = ({ message }) => {
 	return (
-		<StyledMessage>
-			<StyledUsername>{username}</StyledUsername>
-			{children}
-		</StyledMessage>
+		<>
+			<StyledUsername>{message.username}</StyledUsername>
+			<StyledMessage>{message.content}</StyledMessage>
+		</>
 	);
 };
