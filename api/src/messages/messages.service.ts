@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Message } from "@prisma/client";
+import { Message, Prisma } from "@prisma/client";
 
 import { PrismaService } from "../common/services/prisma.service";
 import { SnowflakeService } from "../common/services/snowflake.service";
@@ -80,6 +80,12 @@ export class MessagesService {
 		await this.eventsGateway.sendMessage(newMessage, username);
 
 		return newMessage;
+	}
+
+	async deleteAllMessages(channelId: bigint): Promise<Prisma.BatchPayload> {
+		return await this.prisma.message.deleteMany({
+			where: { channelId: channelId },
+		});
 	}
 
 	async deleteMessage(channelId: bigint, messageId: bigint): Promise<Message> {

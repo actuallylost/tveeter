@@ -82,6 +82,12 @@ export class MessagesController {
 		});
 	}
 
+	// DELETE localhost:3000/api/v1/channels/:id/messages
+	@Delete("/")
+	async deleteAllMessages(@Param("id") id: string) {
+		return await this.messagesService.deleteAllMessages(parseId(id));
+	}
+
 	// DELETE localhost:3000/api/v1/channels/:id/messages/:messageId
 	@Delete("/:messageId")
 	async deleteMessage(@Param("id") id: string, @Param("messageId") messageId: string) {
