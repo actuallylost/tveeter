@@ -16,5 +16,4 @@ The login modal is a simple form that takes in an email and password. It also ha
     -   If a current session exists, the user is redirected to the chat page
     -   If a current session does not exist, the user is redirected to the login page
 -   Handle login errors through the UI (invalid email/password)
-    -   If the email is invalid, send a toast notification
-    -   If the password is invalid, send a toast notification, detailing why it's invalid
+    -   If the email or password is invalid, send a toast notification
