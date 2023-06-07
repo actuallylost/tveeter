@@ -16,7 +16,7 @@ const Redirect = () => {
 
 	return (
 		<>
-			<title>Tveeter Web | Redirecting...</title>
+			<title>Redirecting... | Tveeter</title>
 			<h1>Redirecting...</h1>
 		</>
 	);

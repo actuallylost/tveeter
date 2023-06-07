@@ -17,7 +17,7 @@ const Register = () => {
 				router.push("/");
 			}
 		});
-	}, []);
+	}, [router]);
 
 	const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);
@@ -38,7 +38,7 @@ const Register = () => {
 
 	return (
 		<>
-			<title>Tveeter Web | Register</title>
+			<title>Register | Tveeter</title>
 			<Wrapper>
 				<Container>
 					<Title>Tveeter Register</Title>

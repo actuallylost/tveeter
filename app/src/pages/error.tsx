@@ -1,11 +1,11 @@
 import React from "react";
 
-import { ErrorBoundary } from "react-error-boundary";
-
+// TODO: Implement error page
 const Error = () => {
 	return (
 		<>
-			<ErrorBoundary fallback={<div>Something went wrong</div>}></ErrorBoundary>
+			<title>404 | Tveeter</title>
+			<div>Something went wrong...</div>
 		</>
 	);
 };

@@ -47,7 +47,7 @@ const Login = () => {
 
 	return (
 		<>
-			<title>Tveeter Web | Login</title>
+			<title>Login | Tveeter</title>
 			<Wrapper>
 				<Container>
 					<Title>Tveeter Login</Title>
