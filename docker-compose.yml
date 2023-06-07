@@ -1,19 +1,45 @@
+# Production compose file
+
 services:
     app:
-        build: app
-        ports:
-            - "8080:8080"
+        image: ghcr.io/actuallylost/tveeter-app:latest
+        environment:
+            NODE_ENV: production
+        networks:
+            nw:
+                ipv4_address: 172.30.1.2
+        env_file:
+            - ./app/.env
+        depends_on:
+            - api
     api:
-        build: api
+        image: ghcr.io/actuallylost/tveeter-api:latest
+        environment:
+            NODE_ENV: production
+            DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+        networks:
+            nw:
+                ipv4_address: 172.30.1.3
+        env_file:
+            - ./api/.env
         depends_on:
             - db
-        ports:
-            - "3000:3000"
+        links:
+            - db
     db:
         image: postgres:alpine
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             POSTGRES_DB: postgres
-        ports:
-            - "5432:5432"
+        networks:
+            nw:
+                ipv4_address: 172.30.1.4
+
+networks:
+    nw:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.30.1.0/24
+                - gateway: 172.30.1.1

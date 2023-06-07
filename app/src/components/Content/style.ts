@@ -19,4 +19,9 @@ export const StyledContent = styled(VStack)`
 	box-sizing: border-box;
 	width: 100%;
 	max-height: 583px;
+
+	div {
+		margin: 0;
+		padding: 0;
+	}
 `;

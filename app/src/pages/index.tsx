@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
 import { Content, Footer, Header, Message, Wrapper } from "@/components";
@@ -10,6 +10,9 @@ interface MessagePayload {
 }
 
 const Chat = () => {
+	// Creates a reference for the browser to scroll to
+	const bottomRef = useRef<null | HTMLDivElement>(null);
+
 	const [msg, setMsg] = useState<string>("");
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
 
@@ -59,6 +62,11 @@ const Chat = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		// Below works fine
+		bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [messages]);
+
 	// Event Handlers
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMsg(event.target.value);
@@ -91,7 +99,10 @@ const Chat = () => {
 				<Header username="UsernameValueHere" />
 				<Content>
 					{messages.map((message, index) => (
-						<Message key={index} message={message} />
+						<>
+							<Message key={index} message={message} />
+							<div ref={bottomRef} />
+						</>
 					))}
 				</Content>
 				<Footer>

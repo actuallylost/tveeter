@@ -1,0 +1,11 @@
+/.husky
+/node_modules
+/docs
+.eslintignore
+.eslintrc.js
+.gitignore
+.lintstagedrc.js
+.prettierignore
+.prettierrc
+commitling.config.js
+README.md

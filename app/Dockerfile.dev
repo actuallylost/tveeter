@@ -2,13 +2,12 @@ FROM node:16.15-alpine
 
 RUN apk add --no-cache bash
 RUN apk add --no-cache --virtual .builds-deps build-base python3
-WORKDIR /api
+WORKDIR /app
 
 COPY package.json .
 RUN npm install -g pnpm
 RUN pnpm install
-RUN pnpm prisma generate
-RUN pnpm build
 COPY . .
+RUN pnpm build
 
-CMD ["pnpm", "start:prod"]
+CMD ["pnpm", "start"]

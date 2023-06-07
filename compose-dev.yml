@@ -1,0 +1,44 @@
+# Developer compose file
+
+services:
+    app_dev:
+        build:
+            context: ./app
+            dockerfile: Dockerfile.dev
+        networks:
+            nw_dev:
+                # ipv4_address: 192.168.176.2
+        env_file:
+            - ./app/.env
+        depends_on:
+            - api_dev
+    api_dev:
+        build:
+            context: ./api
+            dockerfile: Dockerfile.dev
+        networks:
+            nw_dev:
+                # ipv4_address: 192.168.176.3
+        env_file:
+            - ./api/.env
+        depends_on:
+            - db_dev
+        links:
+            - db_dev
+    db_dev:
+        image: postgres:alpine
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        networks:
+            nw_dev:
+                # ipv4_address: 192.168.176.4
+
+networks:
+    nw_dev:
+        driver: bridge
+        # ipam:
+        #     config:
+        #         - subnet: 192.168.176.0/20
+        #         - gateway: 192.168.176.1
