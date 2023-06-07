@@ -1,24 +1,16 @@
+import { StandardExceptionFilter } from "src/common/filters/standard.filter";
+import { parseId } from "src/common/util/parseId";
+
 import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	HttpException,
-	Param,
-	Post,
-	UseFilters,
-	UseGuards,
+	Body, Controller, Delete, Get, HttpException, Param, Post, UseFilters,
 } from "@nestjs/common";
 
 import { CreateUserDto } from "./dto/create-user.dto";
-import { parseId } from "src/common/util/parseId";
 import { UsersService } from "./users.service";
-import { SupabaseGuard } from "src/common/supabase";
-import { StandardExceptionFilter } from "src/common/filters/standard.filter";
 
 @Controller("users")
 @UseFilters(StandardExceptionFilter)
-@UseGuards(SupabaseGuard)
+// @UseGuards(SupabaseGuard)
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
@@ -54,11 +46,10 @@ export class UsersController {
 
 	// PUT localhost:3000/api/v1/users/:id
 	@Post("/:id")
-	async createUser(@Param() id: string, @Body() { username, email }: CreateUserDto) {
+	async createUser(@Param() id: string, @Body() { username }: CreateUserDto) {
 		return await this.usersService.createUser({
 			id: parseId(id),
 			username: username,
-			email: email,
 		});
 	}
 

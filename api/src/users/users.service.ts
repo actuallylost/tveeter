@@ -1,13 +1,12 @@
 import { PrismaService } from "src/common/services/prisma.service";
+import { SnowflakeService } from "src/common/services/snowflake.service";
 
 import { Injectable } from "@nestjs/common";
 import { Message, User } from "@prisma/client";
-import { SnowflakeService } from "src/common/services/snowflake.service";
 
 export interface CreateUserOptions {
 	id: bigint;
 	username: string;
-	email: string;
 }
 
 @Injectable()
@@ -35,7 +34,6 @@ export class UsersService {
 			data: {
 				id: this.snowflakeGen.generate().toBigInt(),
 				username: options.username,
-				email: options.email,
 			},
 		});
 	}

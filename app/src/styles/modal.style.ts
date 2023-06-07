@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { HStack, VStack } from "@/styles";
 
 export const Wrapper = styled(VStack)`
@@ -20,7 +21,7 @@ export const Title = styled.h2`
 `;
 
 export const Container = styled(VStack)`
-	width: 33.3%;
+	width: 275px;
 	padding: 15px 15px 0;
 
 	border-radius: 16px;

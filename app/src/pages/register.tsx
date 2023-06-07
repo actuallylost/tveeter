@@ -1,7 +1,8 @@
-import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Wrapper, Container, Input, ButtonContainer, Button, Title } from "@/styles";
-import { supabaseRegister } from "@/common";
+import React, { useEffect, useState } from "react";
+
+import { supabaseRegister, supabaseSessionCheck } from "@/common";
+import { Button, ButtonContainer, Container, Input, Title, Wrapper } from "@/styles";
 
 const Register = () => {
 	const router = useRouter();
@@ -9,6 +10,14 @@ const Register = () => {
 	const [email, setEmail] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
+
+	useEffect(() => {
+		supabaseSessionCheck().then(({ accessToken }) => {
+			if (accessToken !== null) {
+				router.push("/");
+			}
+		});
+	}, []);
 
 	const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);

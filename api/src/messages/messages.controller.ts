@@ -78,7 +78,7 @@ export class MessagesController {
 		return await this.messagesService.createMessage({
 			authorId: 3467505825787905n,
 			channelId: parseId(channelId),
-			content: content,
+			content,
 		});
 	}
 

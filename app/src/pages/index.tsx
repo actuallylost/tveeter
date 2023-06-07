@@ -4,6 +4,8 @@ import { io } from "socket.io-client";
 import { Content, Footer, Header, Message, Wrapper } from "@/components";
 import { StyledButton, StyledInput } from "@/components/Footer/style";
 
+import Login from "./login";
+
 interface MessagePayload {
 	username: string;
 	content: string;
@@ -44,7 +46,7 @@ const Chat = () => {
 	useEffect(() => {
 		const abortController = new AbortController();
 
-		fetch("http://localhost:3000/api/v1/channels/3601644075925504/messages", {
+		fetch("http://localhost:3000/api/v1/channels/13596290973712384/messages", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -81,7 +83,7 @@ const Chat = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		if (msg !== "") {
-			await fetch("http://localhost:3000/api/v1/channels/3601644075925504/messages/", {
+			await fetch("http://localhost:3000/api/v1/channels/13596290973712384/messages/", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -92,9 +94,11 @@ const Chat = () => {
 			setMsg("");
 		}
 	};
+
 	return (
 		<>
 			<title>Tveeter Web | Chat</title>
+			<Login />
 			<Wrapper>
 				<Header username="UsernameValueHere" />
 				<Content>
