@@ -63,6 +63,16 @@ export const supabaseLogin = async (
 	return { accessToken: data.session.access_token, error: null };
 };
 
+export const supabaseLogout = async (): Promise<{ error: string } | { error: null }> => {
+	const { error } = await supabase.auth.signOut();
+
+	if (error) {
+		return { error: error.message };
+	}
+
+	return { error: null };
+};
+
 export const supabaseSessionCheck = async (): Promise<
 	{ accessToken: string; error: null } | { accessToken: null; error: string }
 > => {

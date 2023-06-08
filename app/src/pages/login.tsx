@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { supabaseLogin, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components/Toast";
 import { login } from "@/redux";
-import { Button, ButtonContainer, Container, Input, Title, Wrapper } from "@/styles";
+import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Login = () => {
 	const router = useRouter();
@@ -19,10 +19,10 @@ const Login = () => {
 	useEffect(() => {
 		supabaseSessionCheck().then(({ accessToken }) => {
 			if (accessToken !== null) {
-				router.push("/");
+				router.push("/chat");
 			}
 		});
-	}, [router]);
+	});
 
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
@@ -49,7 +49,7 @@ const Login = () => {
 		<>
 			<title>Login | Tveeter</title>
 			<Wrapper>
-				<Container>
+				<ModalContainer>
 					<Title>Tveeter Login</Title>
 					<Input
 						onChange={handleEmailChange}
@@ -69,7 +69,7 @@ const Login = () => {
 						<Button onClick={() => router.push("/register")}>Register</Button>
 					</ButtonContainer>
 					{error != null && <Toast type={ToastType.Error} message={error} />}
-				</Container>
+				</ModalContainer>
 			</Wrapper>
 		</>
 	);

@@ -159,15 +159,6 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.21.0
         version: 2.21.0
-      '@types/node':
-        specifier: 18.11.18
-        version: 18.11.18
-      '@types/react':
-        specifier: ^18.0.34
-        version: 18.0.34
-      '@types/react-dom':
-        specifier: ^18.0.11
-        version: 18.0.11
       eslint:
         specifier: ^8.0.1
         version: 8.0.1
@@ -183,9 +174,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-error-boundary:
-        specifier: ^4.0.4
-        version: 4.0.4(react@18.2.0)
       react-redux:
         specifier: ^8.0.5
         version: 8.0.5(@types/react-dom@18.0.11)(@types/react@18.0.34)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
@@ -201,16 +189,25 @@ importers:
       styled-system:
         specifier: ^5.1.5
         version: 5.1.5
-      typescript:
-        specifier: 5.0.4
-        version: 5.0.4
     devDependencies:
+      '@types/node':
+        specifier: 18.11.18
+        version: 18.11.18
+      '@types/react':
+        specifier: ^18.0.34
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.11
+        version: 18.0.11
       '@types/styled-components':
         specifier: ^5.1.26
         version: 5.1.26
       '@types/styled-system':
         specifier: ^5.1.16
         version: 5.1.16
+      typescript:
+        specifier: 5.0.4
+        version: 5.0.4
 
 packages:
 
@@ -839,7 +836,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@5.5.0)
       espree: 9.5.2
       globals: 13.20.0
       ignore: 5.2.4
@@ -888,7 +885,7 @@ packages:
     engines: {node: '>=10.10.0'}
     dependencies:
       '@humanwhocodes/object-schema': 1.2.1
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@5.5.0)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -1959,7 +1956,6 @@ packages:
     resolution: {integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==}
     dependencies:
       '@types/react': 18.0.34
-    dev: false
 
   /@types/react@18.0.34:
     resolution: {integrity: sha512-NO1UO8941541CJl1BeOXi8a9dNKFK09Gnru5ZJqkm4Q3/WoQJtHvmwt0VX0SB9YCEwe7TfSSxDuaNmx6H2BAIQ==}
@@ -3547,7 +3543,7 @@ packages:
     resolution: {integrity: sha512-GyKPDyoEha+XZ7iEqam49vz6auPnNJ9ZBfy89f+rMMas8AuiMWOZ9PVzu8xb9ZC6rafUqiGHSCfu22ih66E+1g==}
     dependencies:
       '@socket.io/component-emitter': 3.1.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@5.5.0)
       engine.io-parser: 5.0.6
       ws: 8.11.0
       xmlhttprequest-ssl: 2.0.0
@@ -4003,7 +3999,7 @@ packages:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@5.5.0)
       doctrine: 3.0.0
       enquirer: 2.3.6
       escape-string-regexp: 4.0.0
@@ -6537,15 +6533,6 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-error-boundary@4.0.4(react@18.2.0):
-    resolution: {integrity: sha512-AbqMFx8bCsob8rCHZvJYQ42MQijK0/034RUvan9qrqyJCpazr8d9vKHrysbxcr6odoHLZvQEcYomFPoIqH9fow==}
-    peerDependencies:
-      react: '>=16.13.1'
-    dependencies:
-      '@babel/runtime': 7.21.5
-      react: 18.2.0
-    dev: false
-
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -6990,7 +6977,7 @@ packages:
     engines: {node: '>=10.0.0'}
     dependencies:
       '@socket.io/component-emitter': 3.1.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@5.5.0)
       engine.io-client: 6.4.0
       socket.io-parser: 4.2.2
     transitivePeerDependencies:
@@ -7003,7 +6990,7 @@ packages:
     engines: {node: '>=10.0.0'}
     dependencies:
       '@socket.io/component-emitter': 3.1.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -7723,7 +7710,6 @@ packages:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
     hasBin: true
-    dev: false
 
   /uid@2.0.2:
     resolution: {integrity: sha512-u3xV3X7uzvi5b1MncmZo3i2Aw222Zk1keqLA1YkHldREkAhAqi65wuPfe7lHx8H/Wzy+8CE7S7uS3jekIM5s8g==}

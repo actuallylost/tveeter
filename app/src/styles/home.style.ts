@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
-export const StyledLogin = styled.button`
-	display: flex;
-	align-content: flex-start;
-	cursor: pointer;
+import { VStack } from "./common";
 
-	color: white;
-	background: none;
-	border: none;
+export const Container = styled(VStack)`
+	width: 100vw;
+	height: 100vh;
+`;
 
+export const H1 = styled.h1``;
+
+export const H3 = styled.h3`
+	display: inline-block;
 	position: relative;
 
 	:after {

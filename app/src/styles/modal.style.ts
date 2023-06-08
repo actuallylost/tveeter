@@ -20,7 +20,7 @@ export const Title = styled.h2`
 	color: white;
 `;
 
-export const Container = styled(VStack)`
+export const ModalContainer = styled(VStack)`
 	width: 275px;
 	padding: 15px 15px 0;
 

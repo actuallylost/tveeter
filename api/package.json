@@ -1,10 +1,10 @@
 {
 	"name": "@tveeter/api",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "",
 	"author": "actuallylost",
 	"private": true,
-	"license": "UNLICENSED",
+	"license": "GNU GPLv3",
 	"scripts": {
 		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

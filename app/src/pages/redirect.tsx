@@ -9,14 +9,14 @@ const Redirect = () => {
 	useEffect(() => {
 		supabaseSessionCheck().then(({ accessToken }) => {
 			if (accessToken !== null) {
-				router.push("/");
+				router.push("/chat");
 			}
 		});
-	}, [router]);
+	}, []);
 
 	return (
 		<>
-			<title>Redirecting... | Tveeter</title>
+			<title>Redirect | Tveeter</title>
 			<h1>Redirecting...</h1>
 		</>
 	);

@@ -201,5 +201,5 @@ Tveeter is a web-application that allows you to communicate with others in real-
 -   [ ] Implement forgot email page
 -   [ ] Implement forgot password page
 -   [x] Implement websockets client side
--   [ ] Implement login/register functionality
+-   [x] Implement login/register functionality
 -   [x] Implement chat functionality

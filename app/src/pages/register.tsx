@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 import { supabaseRegister, supabaseSessionCheck } from "@/common";
-import { Button, ButtonContainer, Container, Input, Title, Wrapper } from "@/styles";
+import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Register = () => {
 	const router = useRouter();
@@ -14,10 +14,10 @@ const Register = () => {
 	useEffect(() => {
 		supabaseSessionCheck().then(({ accessToken }) => {
 			if (accessToken !== null) {
-				router.push("/");
+				router.push("/chat");
 			}
 		});
-	}, [router]);
+	}, []);
 
 	const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);
@@ -40,7 +40,7 @@ const Register = () => {
 		<>
 			<title>Register | Tveeter</title>
 			<Wrapper>
-				<Container>
+				<ModalContainer>
 					<Title>Tveeter Register</Title>
 					<Input
 						onChange={handleUsernameChange}
@@ -62,7 +62,7 @@ const Register = () => {
 						<Button onClick={() => router.push("/login")}>Login</Button>
 						<Button onClick={handleSubmit}>Register</Button>
 					</ButtonContainer>
-				</Container>
+				</ModalContainer>
 			</Wrapper>
 		</>
 	);
