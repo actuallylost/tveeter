@@ -2,13 +2,14 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-// Modules
-import { SupabaseGuard, SupabaseModule } from "./common/supabase";
 import { ChannelsModule } from "./channels";
-import { MessagesModule } from "./messages";
-import { EventsModule } from "./events";
-import { UsersModule } from "./users";
+// Modules
+import { SupabaseModule } from "./common/supabase";
 import { configuration } from "./config";
+import { EventsModule } from "./events";
+import { MessagesModule } from "./messages";
+import { TempUserModule } from "./tempusers";
+import { UsersModule } from "./users";
 
 @Module({
 	imports: [
@@ -17,6 +18,7 @@ import { configuration } from "./config";
 			load: [configuration],
 		}),
 		UsersModule,
+		TempUserModule,
 		MessagesModule,
 		ChannelsModule,
 		SupabaseModule,

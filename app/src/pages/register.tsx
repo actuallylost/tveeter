@@ -36,6 +36,7 @@ const Register = () => {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
+
 		await supabaseRegister(username, email, password);
 		dispatch(register({ username }));
 	};

@@ -17,10 +17,15 @@ export class UsersService {
 		return await this.prisma.user.findMany();
 	}
 
-	async getUser(id: bigint): Promise<User | null> {
-		return await this.prisma.user.findUnique({
+	async getUser(id: bigint): Promise<User> {
+		const user = await this.prisma.user.findUnique({
 			where: { id },
 		});
+		if (user == null) {
+			throw new Error("User does not exist");
+		}
+
+		return user;
 	}
 
 	async getUserMessages(id: bigint): Promise<Message[]> {
@@ -30,6 +35,13 @@ export class UsersService {
 	}
 
 	async createUser(options: CreateUserOptions): Promise<User> {
+		const user = await this.prisma.user.findUnique({
+			where: { id: options.id, username: options.username },
+		});
+		if (user !== null) {
+			throw new Error("User already exists");
+		}
+
 		return await this.prisma.user.create({
 			data: {
 				id: this.snowflakeGen.generate().toBigInt(),
@@ -39,6 +51,13 @@ export class UsersService {
 	}
 
 	async deleteUser(id: bigint): Promise<User> {
+		const user = await this.prisma.user.findUnique({
+			where: { id },
+		});
+		if (user == null) {
+			throw new Error("User does not exist");
+		}
+
 		return await this.prisma.user.delete({
 			where: { id },
 		});

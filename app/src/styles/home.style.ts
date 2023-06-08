@@ -10,7 +10,7 @@ export const Container = styled(VStack)`
 export const H1 = styled.h1``;
 
 export const H3 = styled.h3`
-	display: inline-block;
+	display: flex;
 	position: relative;
 
 	:after {

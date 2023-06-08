@@ -19,7 +19,7 @@ const Login = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		if (isLoggedIn) {
+		if (auth) {
 			router.push("/chat");
 		}
 	}, [isLoggedIn]);

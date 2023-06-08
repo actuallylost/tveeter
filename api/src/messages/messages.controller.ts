@@ -73,10 +73,12 @@ export class MessagesController {
 
 	// POST localhost:3000/api/v1/channels/:id/messages
 	@Post("/")
-	async createMessage(@Param("id") channelId: string, @Body() { content }: CreateMessageDto) {
-		// TODO: Fetch authorId from supabase
+	async createMessage(
+		@Param("id") channelId: string,
+		@Body() { authorId, content }: CreateMessageDto,
+	) {
 		return await this.messagesService.createMessage({
-			authorId: 3467505825787905n,
+			authorId: parseId(authorId),
 			channelId: parseId(channelId),
 			content,
 		});

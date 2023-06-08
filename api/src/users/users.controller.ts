@@ -2,7 +2,14 @@ import { StandardExceptionFilter } from "src/common/filters/standard.filter";
 import { parseId } from "src/common/util/parseId";
 
 import {
-	Body, Controller, Delete, Get, HttpException, Param, Post, UseFilters,
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpException,
+	Param,
+	Post,
+	UseFilters,
 } from "@nestjs/common";
 
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -24,12 +31,7 @@ export class UsersController {
 	@Get("/:id")
 	async getUser(@Param("id") id: string) {
 		const userId = parseId(id);
-		const user = await this.usersService.getUser(userId);
-		if (user === null) {
-			throw new HttpException({}, 404);
-		}
-
-		return user;
+		return await this.usersService.getUser(userId);
 	}
 
 	// GET localhost:3000/api/v1/users/:id/messages
@@ -44,11 +46,12 @@ export class UsersController {
 		return await this.usersService.getUserMessages(userId);
 	}
 
-	// PUT localhost:3000/api/v1/users/:id
+	// Post localhost:3000/api/v1/users/:id
 	@Post("/:id")
 	async createUser(@Param() id: string, @Body() { username }: CreateUserDto) {
+		const userId = parseId(id);
 		return await this.usersService.createUser({
-			id: parseId(id),
+			id: userId,
 			username: username,
 		});
 	}
@@ -56,6 +59,7 @@ export class UsersController {
 	// DELETE localhost:3000/api/v1/users/:id
 	@Delete("/:id")
 	async deleteUser(@Param("id") id: string) {
-		return await this.usersService.deleteUser(parseId(id));
+		const userId = parseId(id);
+		return await this.usersService.deleteUser(userId);
 	}
 }
