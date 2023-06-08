@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { supabaseRegister, supabaseSessionCheck } from "@/common";
+import { register } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Register = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
 
 	const [email, setEmail] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
@@ -34,6 +37,7 @@ const Register = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		await supabaseRegister(username, email, password);
+		dispatch(register({ username }));
 	};
 
 	return (

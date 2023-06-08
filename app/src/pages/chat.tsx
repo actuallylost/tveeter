@@ -1,10 +1,12 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
 
-import { supabaseLogout, supabaseSessionCheck } from "@/common";
+import { supabaseLogout } from "@/common";
 import { Content, Footer, Header, Login, Message, Wrapper } from "@/components";
 import { StyledButton, StyledInput } from "@/components/Footer/style";
+import { logout, RootState } from "@/redux";
 
 interface MessagePayload {
 	username: string;
@@ -16,9 +18,10 @@ const Chat = () => {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 
 	const router = useRouter();
+	const dispatch = useDispatch();
+	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
 	const [msg, setMsg] = useState<string>("");
-	const [signedIn, setSignedIn] = useState<boolean>(true);
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
 
 	useEffect(() => {
@@ -68,13 +71,10 @@ const Chat = () => {
 	}, []);
 
 	useEffect(() => {
-		supabaseSessionCheck().then(({ accessToken }) => {
-			if (accessToken == null) {
-				router.push("/login");
-				setSignedIn(false);
-			}
-		});
-	});
+		if (!isLoggedIn) {
+			router.push("/login");
+		}
+	}, [isLoggedIn]);
 
 	useEffect(() => {
 		bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -93,8 +93,8 @@ const Chat = () => {
 
 	const handleClick = async (event: React.FormEvent) => {
 		event.preventDefault();
-		supabaseLogout();
-		setSignedIn(false);
+		await supabaseLogout();
+		dispatch(logout());
 	};
 
 	const handleSubmit = async (event: React.FormEvent) => {
@@ -106,18 +106,23 @@ const Chat = () => {
 					"Content-Type": "application/json",
 				},
 				// TODO: Send authorId and channelId alongside content in JSON object
-				body: JSON.stringify({ content: msg }),
+				body: JSON.stringify({ channelId: "13596290973712384n", content: msg }),
 			}).catch((err) => console.log(err));
 			setMsg("");
 		}
 	};
+
+	// If user isn't logged in, don't render anything
+	if (!isLoggedIn) {
+		return null;
+	}
 
 	return (
 		<>
 			<title>Chat | Tveeter</title>
 			<Wrapper>
 				<Header username="UsernameValueHere"></Header>
-				<Login clickHandler={handleClick} loggedIn={signedIn} />
+				<Login clickHandler={handleClick} loggedIn={isLoggedIn} />
 				<Content>
 					{messages.map((message, index) => (
 						<>

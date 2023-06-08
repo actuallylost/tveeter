@@ -1,28 +1,28 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { supabaseLogin, supabaseSessionCheck } from "@/common";
+import { supabaseLogin } from "@/common";
 import { Toast, ToastType } from "@/components/Toast";
-import { login } from "@/redux";
+import { login, RootState } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Login = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const auth = useSelector((state: RootState) => {
+		state.auth.isLoggedIn, state.auth.username;
+	});
 
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		supabaseSessionCheck().then(({ accessToken }) => {
-			if (accessToken !== null) {
-				router.push("/chat");
-			}
-		});
-	});
+		if (isLoggedIn) {
+			router.push("/chat");
+		}
+	}, [isLoggedIn]);
 
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);

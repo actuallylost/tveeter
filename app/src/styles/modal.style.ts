@@ -64,8 +64,10 @@ export const Button = styled.button`
 	justify-content: center;
 	align-items: center;
 	padding: 16px;
+	margin-left: 8px;
+	margin-right: 8px;
 
-	width: 100%;
+	width: 100px;
 	height: 35px;
 	border: none;
 

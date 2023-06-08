@@ -10,6 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model TempUser {
+  username String @unique
+}
+
 model User {
   id        BigInt              @id @db.BigInt
   username  String              @unique
