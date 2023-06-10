@@ -5,8 +5,8 @@ import { Injectable } from "@nestjs/common";
 import { Message, User } from "@prisma/client";
 
 export interface CreateUserOptions {
-	id: bigint;
 	username: string;
+	email: string;
 }
 
 @Injectable()
@@ -21,7 +21,18 @@ export class UsersService {
 		const user = await this.prisma.user.findUnique({
 			where: { id },
 		});
-		if (user == null) {
+		if (user === null) {
+			throw new Error("User does not exist");
+		}
+
+		return user;
+	}
+
+	async getUserByUsername(username: string): Promise<User> {
+		const user = await this.prisma.user.findUnique({
+			where: { username },
+		});
+		if (user === null) {
 			throw new Error("User does not exist");
 		}
 
@@ -36,7 +47,7 @@ export class UsersService {
 
 	async createUser(options: CreateUserOptions): Promise<User> {
 		const user = await this.prisma.user.findUnique({
-			where: { id: options.id, username: options.username },
+			where: { username: options.username },
 		});
 		if (user !== null) {
 			throw new Error("User already exists");
@@ -46,6 +57,7 @@ export class UsersService {
 			data: {
 				id: this.snowflakeGen.generate().toBigInt(),
 				username: options.username,
+				email: options.email,
 			},
 		});
 	}
@@ -54,7 +66,7 @@ export class UsersService {
 		const user = await this.prisma.user.findUnique({
 			where: { id },
 		});
-		if (user == null) {
+		if (user === null) {
 			throw new Error("User does not exist");
 		}
 

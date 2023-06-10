@@ -34,6 +34,11 @@ export class UsersController {
 		return await this.usersService.getUser(userId);
 	}
 
+	@Get("/:username")
+	async getUserByUsername(@Param("username") username: string) {
+		return await this.usersService.getUserByUsername(username);
+	}
+
 	// GET localhost:3000/api/v1/users/:id/messages
 	@Get("/:id/messages")
 	async getUserMessages(@Param("id") id: string) {
@@ -46,13 +51,12 @@ export class UsersController {
 		return await this.usersService.getUserMessages(userId);
 	}
 
-	// Post localhost:3000/api/v1/users/:id
-	@Post("/:id")
-	async createUser(@Param() id: string, @Body() { username }: CreateUserDto) {
-		const userId = parseId(id);
+	// POST localhost:3000/api/v1/users
+	@Post("/")
+	async createUser(@Body() { username, email }: CreateUserDto) {
 		return await this.usersService.createUser({
-			id: userId,
 			username: username,
+			email: email,
 		});
 	}
 

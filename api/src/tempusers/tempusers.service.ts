@@ -3,6 +3,11 @@ import { TempUser } from "@prisma/client";
 
 import { PrismaService } from "../common/services/prisma.service";
 
+interface CreateTempUserOptions {
+	username: string;
+	email: string;
+}
+
 @Injectable()
 export class TempUserService {
 	constructor(private prisma: PrismaService) {}
@@ -16,16 +21,16 @@ export class TempUserService {
 			where: { username },
 		});
 
-		if (tempUser == null) {
+		if (tempUser === null) {
 			throw new Error("Temporary user does not exist");
 		}
 
 		return tempUser;
 	}
 
-	async createTempUser(username: string): Promise<TempUser> {
+	async createTempUser(options: CreateTempUserOptions): Promise<TempUser> {
 		const tempUser = await this.prisma.tempUser.findUnique({
-			where: { username },
+			where: { username: options.username },
 		});
 
 		if (tempUser !== null) {
@@ -34,7 +39,8 @@ export class TempUserService {
 
 		return await this.prisma.tempUser.create({
 			data: {
-				username,
+				username: options.username,
+				email: options.email,
 			},
 		});
 	}
@@ -43,7 +49,7 @@ export class TempUserService {
 		const tempUser = await this.prisma.tempUser.findUnique({
 			where: { username },
 		});
-		if (tempUser == null) {
+		if (tempUser === null) {
 			throw new Error("Temporary user does not exist");
 		}
 

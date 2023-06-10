@@ -12,11 +12,13 @@ datasource db {
 
 model TempUser {
   username String @unique
+  email    String @unique
 }
 
 model User {
   id        BigInt              @id @db.BigInt
   username  String              @unique
+  email     String              @unique
   createdAt DateTime            @default(now())
   messages  Message[]
   channels  ChannelMembership[]
