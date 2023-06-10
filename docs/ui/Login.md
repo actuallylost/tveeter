@@ -9,7 +9,7 @@ The login modal is a simple form that takes in an email and password. It also ha
 -   Handle login details
     -   Login details are taken from an input element and stored in the component state
     -   On Login Button click, the login details are passed to supabase
-    -   If the login is successful, the access token is stored in local storage
+    -   If the login is successful, the access token is stored in auth state
 -   Once authenticated, redirect to the chat page
     -   The chat page is the default page for authenticated users
     -   Supabase is used to check if the user is authenticated, by checking if a current session exists through `getSession()`.
