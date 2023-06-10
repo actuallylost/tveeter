@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { supabaseRegister, supabaseSessionCheck } from "@/common";
+import { Toast, ToastType } from "@/components";
 import { register } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
@@ -13,11 +14,14 @@ const Register = () => {
 	const [email, setEmail] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		supabaseSessionCheck().then(({ accessToken }) => {
+		supabaseSessionCheck().then(({ accessToken, error }) => {
 			if (accessToken !== null) {
 				router.push("/chat");
+			} else if (error !== null) {
+				setError(error);
 			}
 		});
 	}, []);
@@ -49,16 +53,19 @@ const Register = () => {
 					<Title>Tveeter Register</Title>
 					<Input
 						onChange={handleUsernameChange}
+						value={username}
 						placeholder="Enter a username..."
 						required
 					/>
 					<Input
 						onChange={handleEmailChange}
+						value={email}
 						placeholder="Enter an email address..."
 						required
 					/>
 					<Input
 						type="password"
+						value={password}
 						onChange={handlePasswordChange}
 						placeholder="Enter a strong password..."
 						required
@@ -67,6 +74,7 @@ const Register = () => {
 						<Button onClick={() => router.push("/login")}>Login</Button>
 						<Button onClick={handleSubmit}>Register</Button>
 					</ButtonContainer>
+					{error != null && <Toast type={ToastType.Error} message={error} />}
 				</ModalContainer>
 			</Wrapper>
 		</>

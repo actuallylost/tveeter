@@ -31,12 +31,12 @@ export const supabaseRegister = async (
 		return { user: null, error: "User data is undefined" };
 	}
 
-	await fetch("http://localhost:3000/api/v1/users", {
+	await fetch(`http://localhost:3000/api/v1/tempusers/${username}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ username: username }),
+		body: JSON.stringify({ email: email }),
 	});
 
 	console.log(data.user);
@@ -46,21 +46,33 @@ export const supabaseRegister = async (
 export const supabaseLogin = async (
 	email: string,
 	password: string,
-): Promise<{ accessToken: string; error: null } | { accessToken: null; error: string }> => {
+): Promise<
+	| { username: string; accessToken: string; error: null }
+	| { username: null; accessToken: null; error: string }
+> => {
 	const { data, error } = await supabase.auth.signInWithPassword({
 		email: email,
 		password: password,
 	});
 
 	if (error) {
-		return { accessToken: null, error: error.message };
+		return { username: null, accessToken: null, error: error.message };
 	}
 
 	if (!data.session || !data.session.access_token) {
-		return { accessToken: null, error: "Session validation failed" };
+		return { username: null, accessToken: null, error: "Session validation failed" };
 	}
 
-	return { accessToken: data.session.access_token, error: null };
+	const username = await fetch(`http://localhost:3000/api/v1/users/${email}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	})
+		.then((res) => res.json())
+		.then((data) => data);
+
+	return { username: username, accessToken: data.session.access_token, error: null };
 };
 
 export const supabaseLogout = async (): Promise<{ error: string } | { error: null }> => {
@@ -83,8 +95,8 @@ export const supabaseSessionCheck = async (): Promise<
 	}
 
 	if (!data.session || !data.session.access_token) {
-		return { accessToken: null, error: "" };
+		return { accessToken: null, error: "Session validation failed" };
 	}
 
-	return { accessToken: data.session.access_token as string, error: null };
+	return { accessToken: data.session.access_token, error: null };
 };

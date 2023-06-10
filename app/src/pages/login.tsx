@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { supabaseLogin } from "@/common";
+import { supabaseLogin, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components/Toast";
 import { login, RootState } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
@@ -10,19 +10,30 @@ import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "
 const Login = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const auth = useSelector((state: RootState) => {
-		state.auth.isLoggedIn, state.auth.username;
-	});
+
+	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+	const username = useSelector((state: RootState) => state.auth.username);
 
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		if (auth) {
-			router.push("/chat");
-		}
-	}, [isLoggedIn]);
+		supabaseSessionCheck().then(({ accessToken, error }) => {
+			if (username !== null && accessToken !== null) {
+				dispatch(login({ username, accessToken }));
+				router.push("/chat");
+			} else if (error !== null) {
+				setError(error);
+			}
+		});
+	}, []);
+
+	// useEffect(() => {
+	// 	if (isLoggedIn) {
+	// 		router.push("/chat");
+	// 	}
+	// }, [isLoggedIn]);
 
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
@@ -34,15 +45,20 @@ const Login = () => {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		const { accessToken, error } = await supabaseLogin(email, password);
+		const { username, accessToken, error } = await supabaseLogin(email, password);
+		console.log("this runs after supabaseLogin");
 
-		if (error || accessToken === null) {
-			setError(error ?? "No access token present");
+		if (error || accessToken === null || username === null) {
+			setError(error ?? "No access token or username present");
+			console.log("user does not exist in the database");
+			setError(error);
 			return;
 		}
 
 		setError(null);
-		dispatch(login({ accessToken }));
+		console.log(username);
+		console.log(accessToken);
+		dispatch(login({ username, accessToken }));
 	};
 
 	return (

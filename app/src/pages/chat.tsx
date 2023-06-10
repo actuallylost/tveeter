@@ -20,8 +20,10 @@ const Chat = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+	const username = useSelector((state: RootState) => state.auth.username);
 
 	const [msg, setMsg] = useState<string>("");
+	const [authorId, setAuthorId] = useState<string>("");
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
 
 	useEffect(() => {
@@ -52,7 +54,7 @@ const Chat = () => {
 	useEffect(() => {
 		const abortController = new AbortController();
 
-		fetch("http://localhost:3000/api/v1/channels/13596290973712384/messages", {
+		fetch("http://localhost:3000/api/v1/channels/14681145392246784/messages", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -100,13 +102,26 @@ const Chat = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		if (msg !== "") {
-			await fetch("http://localhost:3000/api/v1/channels/13596290973712384/messages/", {
+			await fetch(`http://localhost:3000/api/v1/users/${username}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => res.json())
+				.then((data: string) => setAuthorId(data))
+				.catch((err) => console.log(err));
+
+			await fetch("http://localhost:3000/api/v1/channels/14681145392246784/messages/", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				// TODO: Send authorId and channelId alongside content in JSON object
-				body: JSON.stringify({ channelId: "13596290973712384n", content: msg }),
+				body: JSON.stringify({
+					authorId: authorId,
+					content: msg,
+				}),
 			}).catch((err) => console.log(err));
 			setMsg("");
 		}
@@ -121,7 +136,7 @@ const Chat = () => {
 		<>
 			<title>Chat | Tveeter</title>
 			<Wrapper>
-				<Header username="UsernameValueHere"></Header>
+				<Header username={username ?? "UsernameValueHere"}></Header>
 				<Login clickHandler={handleClick} loggedIn={isLoggedIn} />
 				<Content>
 					{messages.map((message, index) => (
