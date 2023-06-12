@@ -18,19 +18,23 @@ export class AuthService {
 	async verify(token: string): Promise<{ username: string | null }> {
 		const email = await this.supabase.getEmail(token);
 		if (email === null) {
-			this.logger.debug(`email is null: ${email}`);
 			return { username: null };
 		}
-		this.logger.debug(`email isn't null: ${email}`);
 
 		const tempUser = await this.prisma.tempUser.findUnique({
 			where: { email },
 		});
 		if (tempUser === null) {
-			this.logger.debug(`tempUser is null: ${tempUser}`);
-			return { username: null };
+			const user = await this.prisma.user.findUnique({
+				where: { email },
+			});
+
+			if (user === null) {
+				return { username: null };
+			}
+
+			return { username: user?.username };
 		}
-		this.logger.debug(`tempUser isn't null: ${tempUser}`);
 
 		await this.tempUser.deleteTempUser(tempUser.username);
 
@@ -38,7 +42,6 @@ export class AuthService {
 			username: tempUser.username,
 			email: email,
 		});
-		this.logger.debug(`user: ${user}`);
 
 		return { username: user.username };
 	}

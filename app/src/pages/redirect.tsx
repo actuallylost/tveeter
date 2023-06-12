@@ -11,35 +11,42 @@ const Redirect = () => {
 	const dispatch = useDispatch();
 
 	const [error, setError] = useState<string | null>(null);
-	const [username, setUsername] = useState<string | null>(null);
 
 	useEffect(() => {
 		const abortController = new AbortController();
 
-		supabaseSessionCheck().then(({ accessToken, error }) => {
-			if (accessToken !== null) {
-				fetch("http://localhost:3000/api/v1/auth/verify", {
+		supabaseSessionCheck()
+			.then(async ({ accessToken, error }) => {
+				if (accessToken === null) {
+					throw error;
+				}
+
+				return fetch("http://localhost:3000/api/v1/auth/verify", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({ token: accessToken }),
-				})
-					.then((res) => res.json())
-					.then((data) => setUsername(data))
-					.catch((err) => console.log(err));
-
+					signal: abortController.signal,
+				}).then(async (res) => ({ data: await res.json(), accessToken }));
+			})
+			.then(({ data, accessToken }) => {
+				const username = data["username"];
 				dispatch(login({ username, accessToken }));
 				router.push("/chat");
-			} else if (error !== null) {
-				setError(error);
-			}
-		});
+			})
+			.catch((err) => {
+				if (err instanceof Error) {
+					setError(err.message);
+				} else {
+					setError(err);
+				}
+			});
 
 		return () => {
 			abortController.abort();
 		};
-	}, []);
+	}, [dispatch, router]);
 
 	return (
 		<>

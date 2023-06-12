@@ -39,7 +39,7 @@ export class UsersService {
 		return user;
 	}
 
-	async getUserByEmail(email: string): Promise<string> {
+	async getUserByEmail(email: string): Promise<User> {
 		const user = await this.prisma.user.findUnique({
 			where: { email },
 		});
@@ -47,7 +47,7 @@ export class UsersService {
 			throw new Error("User does not exist");
 		}
 
-		return user.username;
+		return user;
 	}
 
 	async getUserMessages(id: bigint): Promise<Message[]> {
@@ -60,6 +60,7 @@ export class UsersService {
 		const user = await this.prisma.user.findUnique({
 			where: { username: options.username },
 		});
+
 		if (user !== null) {
 			throw new Error("User already exists");
 		}

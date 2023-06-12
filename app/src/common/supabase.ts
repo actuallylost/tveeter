@@ -1,12 +1,12 @@
 import { createClient, SupabaseClient, User } from "@supabase/supabase-js";
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_API_KEY) {
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_API_KEY) {
 	throw new Error("Missing SUPABASE_URL or SUPABASE_API_KEY");
 }
 
 const supabase: SupabaseClient = createClient(
-	process.env.SUPABASE_URL,
-	process.env.SUPABASE_API_KEY,
+	process.env.NEXT_PUBLIC_SUPABASE_URL,
+	process.env.NEXT_PUBLIC_SUPABASE_API_KEY,
 );
 
 // TODO: Implement error toasts for all of the below
@@ -63,12 +63,11 @@ export const supabaseLogin = async (
 		return { username: null, accessToken: null, error: "Session validation failed" };
 	}
 
-	const username = await fetch("http://localhost:3000/api/v1/users", {
-		method: "POST",
+	const username = await fetch(`http://localhost:3000/api/v1/users?email=${email}`, {
+		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ email: email }),
 	})
 		.then((res) => res.json())
 		.then((data: string) => data)
@@ -93,17 +92,18 @@ export const supabaseLogout = async (): Promise<{ error: string } | { error: nul
 };
 
 export const supabaseSessionCheck = async (): Promise<
-	{ accessToken: string; error: null } | { accessToken: null; error: string }
+	| { accessToken: string; error: null; email: string }
+	| { accessToken: null; error: string; email: null }
 > => {
 	const { data, error } = await supabase.auth.getSession();
 
 	if (error) {
-		return { accessToken: null, error: error.message };
+		return { accessToken: null, error: error.message, email: null };
 	}
 
-	if (!data.session || !data.session.access_token) {
-		return { accessToken: null, error: "Session validation failed" };
+	if (!data.session || !data.session.access_token || !data.session.user.email) {
+		return { accessToken: null, error: "Session validation failed", email: null };
 	}
 
-	return { accessToken: data.session.access_token, error: null };
+	return { accessToken: data.session.access_token, email: data.session.user.email, error: null };
 };

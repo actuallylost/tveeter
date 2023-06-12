@@ -10,15 +10,12 @@ import {
 	Logger,
 	Param,
 	Post,
+	Query,
 	UseFilters,
 } from "@nestjs/common";
 
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
-
-interface EmailDto {
-	email: string;
-}
 
 @Controller("users")
 @UseFilters(StandardExceptionFilter)
@@ -30,7 +27,13 @@ export class UsersController {
 
 	// GET localhost:3000/api/v1/users
 	@Get("/")
-	async getUsers() {
+	async getUsers(@Query() query: { username?: string; email?: string }) {
+		if (query.username) {
+			return await this.users.getUserByUsername(query.username);
+		}
+		if (query.email) {
+			return await this.users.getUserByEmail(query.email);
+		}
 		return await this.users.getUsers();
 	}
 
@@ -39,19 +42,6 @@ export class UsersController {
 	async getUser(@Param("id") id: string) {
 		const userId = parseId(id);
 		return await this.users.getUser(userId);
-	}
-
-	// GET localhost:3000/api/v1/users/:username
-	@Get("/:username")
-	async getUserByUsername(@Param("username") username: string) {
-		return await this.users.getUserByUsername(username);
-	}
-
-	// POST localhost:3000/api/v1/users/
-	@Post("/")
-	async getUserByEmail(@Body() { email }: EmailDto) {
-		this.logger.debug(`email received in controller: ${email}`);
-		return await this.users.getUserByEmail(email);
 	}
 
 	// GET localhost:3000/api/v1/users/:id/messages

@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
 
 import { supabaseLogout } from "@/common";
 import { Content, Footer, Header, Login, Message, Wrapper } from "@/components";
 import { StyledButton, StyledInput } from "@/components/Footer/style";
-import { logout, RootState } from "@/redux";
+import { logout, useAppDispatch, useAppSelector } from "@/redux";
 
 interface MessagePayload {
 	username: string;
@@ -18,9 +17,8 @@ const Chat = () => {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 
 	const router = useRouter();
-	const dispatch = useDispatch();
-	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-	const username = useSelector((state: RootState) => state.auth.username);
+	const dispatch = useAppDispatch();
+	const { isLoggedIn, username } = useAppSelector((state) => state.auth);
 
 	const [msg, setMsg] = useState<string>("");
 	const [authorId, setAuthorId] = useState<string>("");
@@ -54,13 +52,16 @@ const Chat = () => {
 	useEffect(() => {
 		const abortController = new AbortController();
 
-		fetch("http://localhost:3000/api/v1/channels/14681145392246784/messages", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
+		fetch(
+			`http://localhost:3000/api/v1/channels/${process.env.NEXT_PUBLIC_GLOBAL_CHANNEL_ID}/messages`,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				signal: abortController.signal,
 			},
-			signal: abortController.signal,
-		})
+		)
 			.then((res) => res.json())
 			.then((data) => {
 				setMessages(data);
@@ -76,7 +77,7 @@ const Chat = () => {
 		if (!isLoggedIn) {
 			router.push("/login");
 		}
-	}, [isLoggedIn]);
+	}, [isLoggedIn, router]);
 
 	useEffect(() => {
 		bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -102,7 +103,7 @@ const Chat = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		if (msg !== "") {
-			await fetch(`http://localhost:3000/api/v1/users/${username}`, {
+			await fetch(`http://localhost:3000/api/v1/users?username=${username}`, {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
@@ -112,17 +113,20 @@ const Chat = () => {
 				.then((data: string) => setAuthorId(data))
 				.catch((err) => console.log(err));
 
-			await fetch("http://localhost:3000/api/v1/channels/14681145392246784/messages/", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
+			await fetch(
+				`http://localhost:3000/api/v1/channels/${process.env.NEXT_PUBLIC_GLOBAL_CHANNEL_ID}/messages/`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					// TODO: Send authorId and channelId alongside content in JSON object
+					body: JSON.stringify({
+						authorId: authorId,
+						content: msg,
+					}),
 				},
-				// TODO: Send authorId and channelId alongside content in JSON object
-				body: JSON.stringify({
-					authorId: authorId,
-					content: msg,
-				}),
-			}).catch((err) => console.log(err));
+			).catch((err) => console.log(err));
 			setMsg("");
 		}
 	};

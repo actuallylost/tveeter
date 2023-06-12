@@ -1,47 +1,46 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
 import { supabaseLogin, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components/Toast";
-import { login } from "@/redux";
+import { login, useAppDispatch } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Login = () => {
 	const router = useRouter();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
-	const [username, setUsername] = useState<string | null>(null);
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		supabaseSessionCheck().then(({ accessToken, error }) => {
-			if (accessToken !== null) {
-				fetch("http://localhost:3000/api/v1/users", {
-					method: "POST",
+		supabaseSessionCheck()
+			.then(({ accessToken, email, error }) => {
+				if (accessToken === null) {
+					throw error;
+				}
+
+				return fetch(`http://localhost:3000/api/v1/users?email=${email}`, {
+					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify({ email: email }),
-				})
-					.then((res) => res.json())
-					.then((data) => setUsername(data))
-					.catch((err) => console.log(err));
-				dispatch(login({ username, accessToken }));
+				}).then(async (res) => ({ data: await res.json(), accessToken, email }));
+			})
+			.then(({ data, accessToken }) => {
+				dispatch(login({ username: data["username"], accessToken }));
 				router.push("/chat");
-			} else if (error !== null) {
-				setError(error);
-			}
-		});
+			})
+			.catch((err) => {
+				if (err instanceof Error) {
+					setError(err.message);
+				} else {
+					setError(err);
+				}
+			});
 	}, []);
 
-	// useEffect(() => {
-	// 	if (isLoggedIn) {
-	// 		router.push("/chat");
-	// 	}
-	// }, [isLoggedIn]);
 
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
