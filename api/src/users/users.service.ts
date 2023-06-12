@@ -39,6 +39,17 @@ export class UsersService {
 		return user;
 	}
 
+	async getUserByEmail(email: string): Promise<string> {
+		const user = await this.prisma.user.findUnique({
+			where: { email },
+		});
+		if (user === null) {
+			throw new Error("User does not exist");
+		}
+
+		return user.username;
+	}
+
 	async getUserMessages(id: bigint): Promise<Message[]> {
 		return await this.prisma.message.findMany({
 			where: { authorId: id },

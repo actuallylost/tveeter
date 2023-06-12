@@ -1,3 +1,5 @@
+import SupabaseService from "src/common/supabase/supabase.service";
+
 import { Injectable } from "@nestjs/common";
 import { TempUser } from "@prisma/client";
 
@@ -16,16 +18,15 @@ export class TempUserService {
 		return await this.prisma.tempUser.findMany();
 	}
 
-	async getTempUser(username: string): Promise<TempUser> {
-		const tempUser = await this.prisma.tempUser.findUnique({
-			where: { username },
-		});
-
-		if (tempUser === null) {
-			throw new Error("Temporary user does not exist");
-		}
-
-		return tempUser;
+	async getTempUser(username: string): Promise<TempUser | null> {
+		return this.prisma.tempUser
+			.findUnique({
+				where: { username },
+			})
+			.catch((err) => {
+				console.error(err);
+				return null;
+			});
 	}
 
 	async createTempUser(options: CreateTempUserOptions): Promise<TempUser> {

@@ -10,11 +10,9 @@ import {
 	Param,
 	Post,
 	UseFilters,
-	UseGuards,
 } from "@nestjs/common";
 
 import { ChannelsService } from "./channels.service";
-import { SupabaseGuard } from "src/common/supabase";
 
 @Controller("channels")
 @UseFilters(StandardExceptionFilter)
@@ -22,18 +20,18 @@ import { SupabaseGuard } from "src/common/supabase";
 export class ChannelsController {
 	private readonly logger = new Logger(ChannelsController.name);
 
-	constructor(private readonly channelsService: ChannelsService) {}
+	constructor(private readonly channels: ChannelsService) {}
 
 	// GET localhost:3000/api/v1/channels
 	@Get("/")
 	async getChannels() {
-		return await this.channelsService.getChannels();
+		return await this.channels.getChannels();
 	}
 
 	// GET localhost:3000/api/v1/channels/:id
 	@Get("/:id")
 	async getChannel(@Param("id") id: string) {
-		const channel = await this.channelsService.getChannel(parseId(id));
+		const channel = await this.channels.getChannel(parseId(id));
 		if (channel === null) {
 			throw new HttpException({}, 404);
 		}
@@ -44,28 +42,28 @@ export class ChannelsController {
 	// GET localhost:3000/api/v1/channels/:id/users
 	@Get("/:id/users")
 	async getChannelUsers(@Param("id") id: string) {
-		const channel = await this.channelsService.getChannel(parseId(id));
+		const channel = await this.channels.getChannel(parseId(id));
 		if (channel === null) {
 			throw new HttpException({}, 404);
 		}
 
-		return await this.channelsService.getChannelUsers(parseId(id));
+		return await this.channels.getChannelUsers(parseId(id));
 	}
 
 	// POST localhost:3000/api/v1/channels/
 	@Post("/")
 	async createChannel() {
-		return await this.channelsService.createChannel();
+		return await this.channels.createChannel();
 	}
 
 	// DELETE localhost:3000/api/v1/channels/:id
 	@Delete("/:id")
 	async deleteChannel(@Param("id") id: string) {
-		const channel = await this.channelsService.getChannel(parseId(id));
+		const channel = await this.channels.getChannel(parseId(id));
 		if (channel === null) {
 			throw new HttpException({}, 404);
 		}
 
-		return await this.channelsService.deleteChannel(parseId(id));
+		return await this.channels.deleteChannel(parseId(id));
 	}
 }

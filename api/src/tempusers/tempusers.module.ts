@@ -10,5 +10,6 @@ import { TempUserService } from "./tempusers.service";
 	imports: [SupabaseModule],
 	controllers: [TempUserController],
 	providers: [TempUserService, PrismaService],
+	exports: [TempUserService],
 })
 export class TempUserModule {}

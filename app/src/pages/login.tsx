@@ -1,26 +1,34 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { supabaseLogin, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components/Toast";
-import { login, RootState } from "@/redux";
+import { login } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Login = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-	const username = useSelector((state: RootState) => state.auth.username);
-
+	const [username, setUsername] = useState<string | null>(null);
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		supabaseSessionCheck().then(({ accessToken, error }) => {
-			if (username !== null && accessToken !== null) {
+			if (accessToken !== null) {
+				fetch("http://localhost:3000/api/v1/users", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ email: email }),
+				})
+					.then((res) => res.json())
+					.then((data) => setUsername(data))
+					.catch((err) => console.log(err));
 				dispatch(login({ username, accessToken }));
 				router.push("/chat");
 			} else if (error !== null) {
@@ -47,11 +55,17 @@ const Login = () => {
 		event.preventDefault();
 		const { username, accessToken, error } = await supabaseLogin(email, password);
 		console.log("this runs after supabaseLogin");
+		console.log(email);
 
-		if (error || accessToken === null || username === null) {
-			setError(error ?? "No access token or username present");
-			console.log("user does not exist in the database");
+		if (error) {
 			setError(error);
+			console.log(error);
+			return;
+		}
+
+		if (accessToken === null || username === null) {
+			setError("No access token or username present");
+			console.log("Access token or username is null");
 			return;
 		}
 
@@ -68,8 +82,9 @@ const Login = () => {
 				<ModalContainer>
 					<Title>Tveeter Login</Title>
 					<Input
-						onChange={handleEmailChange}
+						type="email"
 						value={email}
+						onChange={handleEmailChange}
 						placeholder="Enter your email address..."
 						required
 					/>

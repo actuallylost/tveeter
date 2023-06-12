@@ -37,7 +37,7 @@ export const supabaseRegister = async (
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({ email: email }),
-	});
+	}).catch((err) => console.log(err));
 
 	console.log(data.user);
 	return { user: data.user, error: null };
@@ -63,14 +63,21 @@ export const supabaseLogin = async (
 		return { username: null, accessToken: null, error: "Session validation failed" };
 	}
 
-	const username = await fetch(`http://localhost:3000/api/v1/users/${email}`, {
-		method: "GET",
+	const username = await fetch("http://localhost:3000/api/v1/users", {
+		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
+		body: JSON.stringify({ email: email }),
 	})
 		.then((res) => res.json())
-		.then((data) => data);
+		.then((data: string) => data)
+		.catch((err) => console.log(err));
+
+	if (typeof username !== "string") {
+		console.log(`${username}`);
+		return { username: null, accessToken: null, error: "Username is not a string" };
+	}
 
 	return { username: username, accessToken: data.session.access_token, error: null };
 };

@@ -1,46 +1,40 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components";
-import { login, RootState } from "@/redux";
+import { login } from "@/redux";
 
 const Redirect = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const username = useSelector((state: RootState) => state.auth.username);
 
 	const [error, setError] = useState<string | null>(null);
+	const [username, setUsername] = useState<string | null>(null);
 
 	useEffect(() => {
+		const abortController = new AbortController();
+
 		supabaseSessionCheck().then(({ accessToken, error }) => {
-			if (accessToken !== null && username !== null) {
+			if (accessToken !== null) {
+				fetch("http://localhost:3000/api/v1/auth/verify", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ token: accessToken }),
+				})
+					.then((res) => res.json())
+					.then((data) => setUsername(data))
+					.catch((err) => console.log(err));
+
 				dispatch(login({ username, accessToken }));
 				router.push("/chat");
 			} else if (error !== null) {
 				setError(error);
 			}
 		});
-	}, []);
-
-	useEffect(() => {
-		const abortController = new AbortController();
-
-		fetch(`http://localhost:3000/api/v1/tempusers/${username}`, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			signal: abortController.signal,
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
-			})
-			.catch((err) => console.log(err));
-
-		// fetch(`http://localhost:3000/api/v1/users`);
 
 		return () => {
 			abortController.abort();

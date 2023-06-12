@@ -2,6 +2,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
+import { AuthModule } from "./auth";
 import { ChannelsModule } from "./channels";
 // Modules
 import { SupabaseModule } from "./common/supabase";
@@ -21,6 +22,7 @@ import { UsersModule } from "./users";
 		TempUserModule,
 		MessagesModule,
 		ChannelsModule,
+		AuthModule,
 		SupabaseModule,
 		EventsModule,
 	],

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { ConfigService } from "@nestjs/config";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 @Injectable()
 export default class SupabaseService extends SupabaseClient {
@@ -16,5 +16,16 @@ export default class SupabaseService extends SupabaseClient {
 				},
 			},
 		);
+	}
+
+	async getEmail(accessToken: string): Promise<string | null> {
+		const email = this.auth.getUser(accessToken).then((session) => {
+			if (!session.data.user || !session.data.user.email) {
+				return null;
+			}
+			return session.data.user.email;
+		});
+
+		return email;
 	}
 }

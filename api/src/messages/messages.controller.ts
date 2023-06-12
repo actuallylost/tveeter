@@ -22,7 +22,7 @@ import { MessagesService } from "./messages.service";
 export class MessagesController {
 	constructor(
 		private readonly messagesService: MessagesService,
-		private readonly channelsService: ChannelsService,
+		private readonly channels: ChannelsService,
 	) {}
 
 	// GET localhost:3000/api/v1/channels/:id/messages
@@ -30,7 +30,7 @@ export class MessagesController {
 	async getRecentMessagesByChannelId(@Param("id") id: string) {
 		const parsedChannelId = parseId(id);
 
-		const channel = await this.channelsService.getChannel(parsedChannelId);
+		const channel = await this.channels.getChannel(parsedChannelId);
 		if (channel === null) {
 			throw new HttpException({}, 404);
 		}
@@ -44,7 +44,7 @@ export class MessagesController {
 		const parsedChannelId = parseId(id);
 		const parsedUserId = parseId(userId);
 
-		const channel = await this.channelsService.getChannel(parsedChannelId);
+		const channel = await this.channels.getChannel(parsedChannelId);
 		if (channel === null) {
 			throw new HttpException({}, 404);
 		}
@@ -58,7 +58,7 @@ export class MessagesController {
 		const parsedChannelId = parseId(id);
 		const parsedMessageId = parseId(messageId);
 
-		const channel = await this.channelsService.getChannel(parsedChannelId);
+		const channel = await this.channels.getChannel(parsedChannelId);
 		if (channel === null) {
 			throw new HttpException({}, 404);
 		}
