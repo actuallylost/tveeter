@@ -21,7 +21,6 @@ const Chat = () => {
 	const { isLoggedIn, username } = useAppSelector((state) => state.auth);
 
 	const [msg, setMsg] = useState<string>("");
-	const [authorId, setAuthorId] = useState<string>("");
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
 
 	useEffect(() => {
@@ -64,7 +63,8 @@ const Chat = () => {
 		)
 			.then((res) => res.json())
 			.then((data) => {
-				setMessages(data);
+				console.log(data);
+				return setMessages(data);
 			})
 			.catch((err) => console.log(err));
 
@@ -103,16 +103,6 @@ const Chat = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		if (msg !== "") {
-			await fetch(`http://localhost:3000/api/v1/users?username=${username}`, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			})
-				.then((res) => res.json())
-				.then((data: string) => setAuthorId(data))
-				.catch((err) => console.log(err));
-
 			await fetch(
 				`http://localhost:3000/api/v1/channels/${process.env.NEXT_PUBLIC_GLOBAL_CHANNEL_ID}/messages/`,
 				{
@@ -120,9 +110,8 @@ const Chat = () => {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					// TODO: Send authorId and channelId alongside content in JSON object
 					body: JSON.stringify({
-						authorId: authorId,
+						username: username,
 						content: msg,
 					}),
 				},

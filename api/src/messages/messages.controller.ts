@@ -75,10 +75,10 @@ export class MessagesController {
 	@Post("/")
 	async createMessage(
 		@Param("id") channelId: string,
-		@Body() { authorId, content }: CreateMessageDto,
+		@Body() { username, content }: CreateMessageDto,
 	) {
 		return await this.messagesService.createMessage({
-			authorId: parseId(authorId),
+			username: username,
 			channelId: parseId(channelId),
 			content,
 		});

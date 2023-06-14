@@ -3,10 +3,7 @@ import { StandardExceptionFilter } from "src/common/filters/standard.filter";
 import { Body, Controller, Logger, Post, UseFilters } from "@nestjs/common";
 
 import { AuthService } from "./auth.service";
-
-interface TokenDto {
-	token: string;
-}
+import { TokenDto } from "./dto";
 
 @Controller("auth")
 @UseFilters(StandardExceptionFilter)

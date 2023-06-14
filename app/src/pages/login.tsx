@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 import { supabaseLogin, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components/Toast";
-import { login, useAppDispatch } from "@/redux";
+import { login, useAppDispatch, useAppSelector } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Login = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
+	const { isLoggedIn } = useAppSelector((state) => state.auth);
 
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
@@ -40,7 +41,6 @@ const Login = () => {
 				}
 			});
 	}, []);
-
 
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
@@ -74,6 +74,16 @@ const Login = () => {
 		dispatch(login({ username, accessToken }));
 	};
 
+	const handleKeyDown = (event: React.FormEvent) => {
+		event.preventDefault();
+		handleSubmit(event);
+	};
+
+	// If the user is logged in, don't render anything
+	if (isLoggedIn) {
+		return null;
+	}
+
 	return (
 		<>
 			<title>Login | Tveeter</title>
@@ -84,6 +94,7 @@ const Login = () => {
 						type="email"
 						value={email}
 						onChange={handleEmailChange}
+						onKeyDown={handleKeyDown}
 						placeholder="Enter your email address..."
 						required
 					/>
@@ -91,6 +102,7 @@ const Login = () => {
 						type="password"
 						value={password}
 						onChange={handlePasswordChange}
+						onKeyDown={handleKeyDown}
 						placeholder="Enter your password..."
 						required
 					/>

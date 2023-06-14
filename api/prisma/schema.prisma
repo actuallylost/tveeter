@@ -22,6 +22,8 @@ model User {
   createdAt DateTime            @default(now())
   messages  Message[]
   channels  ChannelMembership[]
+
+  @@unique([username, id])
 }
 
 model Channel {
@@ -44,11 +46,12 @@ model ChannelMembership {
 model Message {
   id        BigInt   @db.BigInt
   content   String
+  username  String
   authorId  BigInt   @db.BigInt
   channelId BigInt   @db.BigInt
   createdAt DateTime @default(now())
 
-  user    User    @relation(fields: [authorId], references: [id])
+  user    User    @relation(fields: [username, authorId], references: [username, id])
   channel Channel @relation(fields: [channelId], references: [id])
 
   @@id([channelId, id])

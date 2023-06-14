@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 
 import { supabaseRegister, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components";
+import { useAppSelector } from "@/redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 const Register = () => {
 	const router = useRouter();
+	const { isLoggedIn } = useAppSelector((state) => state.auth);
 
 	const [email, setEmail] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
@@ -39,6 +41,11 @@ const Register = () => {
 		event.preventDefault();
 		await supabaseRegister(username, email, password);
 	};
+
+	// If the user is logged in, don't render anything
+	if (isLoggedIn) {
+		return null;
+	}
 
 	return (
 		<>

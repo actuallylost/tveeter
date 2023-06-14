@@ -1,10 +1,10 @@
-import { IsDefined, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateMessageDto {
-	@IsDefined()
-	authorId!: string;
+	@IsNotEmpty()
+	username!: string;
 
 	@IsString()
-	@IsDefined()
+	@IsNotEmpty()
 	content!: string;
 }

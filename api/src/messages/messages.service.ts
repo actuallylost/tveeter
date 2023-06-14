@@ -6,7 +6,7 @@ import { SnowflakeService } from "../common/services/snowflake.service";
 import { EventsGateway } from "../events";
 
 interface CreateMessageOptions {
-	authorId: bigint;
+	username: string;
 	channelId: bigint;
 	content: string;
 }
@@ -60,18 +60,20 @@ export class MessagesService {
 	}
 
 	async createMessage(options: CreateMessageOptions): Promise<Message> {
-		const author = await this.prisma.user.findUnique({ where: { id: options.authorId } });
+		const author = await this.prisma.user.findUnique({ where: { username: options.username } });
 
 		if (!author) {
 			throw new Error("Cannot send message for non-existent author");
 		}
 
 		const username = author.username;
+		const authorId = author.id;
 
 		const newMessage = await this.prisma.message.create({
 			data: {
 				id: this.snowflakeGen.generate().toBigInt(),
-				authorId: options.authorId,
+				username: options.username,
+				authorId: authorId,
 				channelId: options.channelId,
 				content: options.content,
 			},
