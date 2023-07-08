@@ -11,6 +11,9 @@ export const StyledContainer = styled(VStack)`
 	border-radius: 8px;
 
 	padding: 1rem;
+
+	transition: transform 0.6s ease-in-out;
+	animation: toast-in-right;
 `;
 
 export const StyledType = styled(HStack)``;

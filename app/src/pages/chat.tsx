@@ -129,8 +129,9 @@ const Chat = () => {
 		<>
 			<title>Chat | Tveeter</title>
 			<Wrapper>
-				<Header username={username ?? "UsernameValueHere"}></Header>
-				<Login clickHandler={handleClick} loggedIn={isLoggedIn} />
+				<Header username={username ?? "UsernameValueHere"}>
+					<Login clickHandler={handleClick} loggedIn={isLoggedIn} />
+				</Header>
 				<Content>
 					{messages.map((message, index) => (
 						<>

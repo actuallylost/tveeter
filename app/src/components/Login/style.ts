@@ -2,12 +2,14 @@ import styled from "styled-components";
 
 export const StyledLogin = styled.button`
 	display: flex;
-	align-content: flex-start;
+	align-content: flex-end;
 	cursor: pointer;
 
 	color: white;
 	background: none;
 	border: none;
+
+	font-weight: 700;
 
 	position: relative;
 
