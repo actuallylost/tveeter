@@ -2,6 +2,7 @@ FROM node:16.15-alpine
 
 RUN apk add --no-cache bash
 RUN apk add --no-cache --virtual .builds-deps build-base python3
+ENV NODE_ENV production
 WORKDIR /app
 
 COPY package.json .
