@@ -1,9 +1,14 @@
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-import { H1, H3 } from "@/styles";
+import { H1, H3 } from "../../styles";
 
-const Home = () => {
+export const metadata: Metadata = {
+	title: "Home | Tveeter",
+};
+
+const Page = () => {
 	const router = useRouter();
 
 	const handleClick = async (event: React.FormEvent) => {
@@ -13,7 +18,6 @@ const Home = () => {
 
 	return (
 		<>
-			<title>Home | Tveeter</title>
 			{/* <Container> */}
 			<H1>Under construction...</H1>
 			<H3 onClick={handleClick}>Click here to chat!</H3>
@@ -22,4 +26,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default Page;

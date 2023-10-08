@@ -1,12 +1,20 @@
+"use client";
+
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { supabaseRegister, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components";
-import { useAppSelector } from "@/redux";
-import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
-const Register = () => {
+import { supabaseRegister, supabaseSessionCheck } from "../../common";
+import { useAppSelector } from "../../redux";
+import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "../../styles";
+
+export const metadata: Metadata = {
+	title: "Register | Tveeter",
+};
+
+const Page = () => {
 	const router = useRouter();
 	const { isLoggedIn } = useAppSelector((state) => state.auth);
 
@@ -49,7 +57,6 @@ const Register = () => {
 
 	return (
 		<>
-			<title>Register | Tveeter</title>
 			<Wrapper>
 				<ModalContainer>
 					<Title>Tveeter Register</Title>
@@ -84,4 +91,4 @@ const Register = () => {
 	);
 };
 
-export default Register;
+export default Page;
