@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import React from "react";
 
-import { H1, H3 } from "../../styles";
+import { H1, H3 } from "@/styles";
 
 export const metadata: Metadata = {
 	title: "404 | Tveeter",

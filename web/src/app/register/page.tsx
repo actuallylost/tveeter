@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 	title: "Register | Tveeter",
 };
 
-const Page = () => {
+export default function Page() {
 	const router = useRouter();
 	const { isLoggedIn } = useAppSelector((state) => state.auth);
 
@@ -89,6 +89,4 @@ const Page = () => {
 			</Wrapper>
 		</>
 	);
-};
-
-export default Page;
+}

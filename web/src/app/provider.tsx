@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 
-import { GlobalStyles } from "../../styles/common/GlobalStyles";
-import { store } from "./src/redux";
+import { store } from "@/redux";
+import { GlobalStyles } from "@/styles";
 
 export const RootProvider = ({ children }: { children: React.ReactNode }) => {
 	return (

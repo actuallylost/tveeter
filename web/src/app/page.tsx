@@ -2,13 +2,13 @@ import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-import { H1, H3 } from "../../styles";
+import { H1, H3 } from "@/styles";
 
 export const metadata: Metadata = {
 	title: "Home | Tveeter",
 };
 
-const Page = () => {
+export default function Page() {
 	const router = useRouter();
 
 	const handleClick = async (event: React.FormEvent) => {
@@ -24,6 +24,4 @@ const Page = () => {
 			{/* </Container> */}
 		</>
 	);
-};
-
-export default Page;
+}

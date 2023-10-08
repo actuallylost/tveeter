@@ -1,1 +1,1 @@
-export * from "@/app/common/supabase";
+export * from "@/common/supabase";

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 	title: "Redirect | Tveeter",
 };
 
-const Page = () => {
+export default function Page() {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -63,6 +63,4 @@ const Page = () => {
 			{error !== null && <Toast type={ToastType.Error} message={error} />}
 		</>
 	);
-};
-
-export default Page;
+}

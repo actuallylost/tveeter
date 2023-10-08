@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 	title: "Chat | Tveeter",
 };
 
-const Page = () => {
+export default function Page() {
 	// Creates a reference for the browser to scroll to
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -160,6 +160,4 @@ const Page = () => {
 			</Wrapper>
 		</>
 	);
-};
-
-export default Page;
+}

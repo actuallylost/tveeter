@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { HStack, VStack } from "./";
+import { HStack, VStack } from "./common";
 
 export const Wrapper = styled(VStack)`
 	width: 100vw;

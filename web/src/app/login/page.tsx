@@ -4,17 +4,17 @@ import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 
+import { supabaseLogin, supabaseSessionCheck } from "@/common/";
 import { Toast, ToastType } from "@/components/Toast";
+import { login, useAppDispatch, useAppSelector } from "@/redux";
 
-import { supabaseLogin, supabaseSessionCheck } from "../../common";
-import { login, useAppDispatch, useAppSelector } from "../../redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "../../styles";
 
 export const metadata: Metadata = {
 	title: "Login | Tveeter",
 };
 
-const Page = () => {
+export default function Page() {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const { isLoggedIn } = useAppSelector((state) => state.auth);
@@ -122,6 +122,4 @@ const Page = () => {
 			</Wrapper>
 		</>
 	);
-};
-
-export default Page;
+}
