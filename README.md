@@ -6,7 +6,7 @@ This is a project I built to learn more about how React, NestJS, and Socket.io w
 
 ## Directories
 
--   `app`: React using Next for routing (frontend)
+-   `web`: React using Next for routing (frontend)
 -   `api`: NestJS & Socket.io for api management and websockets (backend)
 
 ## Running the app
@@ -16,7 +16,7 @@ If you'd like to run the app locally, you'll need to have [pnpm](https://pnpm.io
 To run the frontend you can use the following commands:
 
 ```bash
-cd app
+cd web
 pnpm install
 pnpm dev
 ```
