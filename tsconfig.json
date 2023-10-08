@@ -3,9 +3,8 @@
 		"lib": ["ESNext"],
 		"module": "esnext",
 		"target": "esnext",
-		"moduleResolution": "bundler",
+		"moduleResolution": "nodenext",
 		"moduleDetection": "force",
-		"allowImportingTsExtensions": true,
 		"noEmit": true,
 		"composite": true,
 		"strict": true,
@@ -14,9 +13,6 @@
 		"jsx": "react-jsx",
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
-		"allowJs": true,
-		"types": [
-			"bun-types" // add Bun global
-		]
+		"allowJs": true
 	}
 }
