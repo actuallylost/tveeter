@@ -6,7 +6,7 @@ services:
             context: ./app
             dockerfile: Dockerfile.dev
         networks:
-            nw_dev:
+            tveeter_nw_dev:
                 # ipv4_address: 192.168.176.2
         env_file:
             - ./app/.env
@@ -17,7 +17,7 @@ services:
             context: ./api
             dockerfile: Dockerfile.dev
         networks:
-            nw_dev:
+            tveeter_nw_dev:
                 # ipv4_address: 192.168.176.3
         env_file:
             - ./api/.env
@@ -27,17 +27,14 @@ services:
             - db_dev
     db_dev:
         image: postgres:alpine
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: postgres
+        env_file:
+            - .env
         networks:
-            nw_dev:
+            tveeter_nw_dev:
                 # ipv4_address: 192.168.176.4
 
 networks:
-    nw_dev:
-        driver: bridge
+    tveeter_nw_dev:
         # ipam:
         #     config:
         #         - subnet: 192.168.176.0/20

@@ -1,4 +1,5 @@
 {
+	"name": "tveeter",
 	"license": "GNU GPLv3",
 	"scripts": {
 		"prepare": "husky install"
@@ -12,6 +13,12 @@
 		"@commitlint/config-conventional": "^17.4.4",
 		"eslint-config-prettier": "^8.3.0",
 		"lint-staged": "^13.2.0",
-		"prettier": "^2.8.7"
+		"prettier": "^2.8.7",
+		"bun-types": "latest"
+	},
+	"module": "index.ts",
+	"type": "module",
+	"peerDependencies": {
+		"typescript": "^5.0.0"
 	}
 }

@@ -25,11 +25,12 @@
 		"styled-system": "^5.1.5"
 	},
 	"devDependencies": {
-		"@types/node": "18.11.18",
+		"@tauri-apps/cli": "^1.5.1",
 		"@types/react": "^18.0.34",
 		"@types/react-dom": "^18.0.11",
 		"@types/styled-components": "^5.1.26",
 		"@types/styled-system": "^5.1.16",
+		"bun-types": "1.0.5-canary.20231007T140129",
 		"typescript": "5.0.4"
 	}
 }
