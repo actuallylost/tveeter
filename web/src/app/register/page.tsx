@@ -1,6 +1,5 @@
 "use client";
 
-import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -9,10 +8,6 @@ import { Toast, ToastType } from "@/components";
 import { supabaseRegister, supabaseSessionCheck } from "../../common";
 import { useAppSelector } from "../../redux";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "../../styles";
-
-export const metadata: Metadata = {
-	title: "Register | Tveeter",
-};
 
 export default function Page() {
 	const router = useRouter();
@@ -59,6 +54,7 @@ export default function Page() {
 		<>
 			<Wrapper>
 				<ModalContainer>
+					<title>Tveeter | Register</title>
 					<Title>Tveeter Register</Title>
 					<Input
 						value={username}

@@ -1,6 +1,5 @@
 "use client";
 
-import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 
@@ -9,10 +8,6 @@ import { Toast, ToastType } from "@/components/Toast";
 import { login, useAppDispatch, useAppSelector } from "@/redux";
 
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "../../styles";
-
-export const metadata: Metadata = {
-	title: "Login | Tveeter",
-};
 
 export default function Page() {
 	const router = useRouter();
@@ -96,6 +91,7 @@ export default function Page() {
 		<>
 			<Wrapper>
 				<ModalContainer>
+					<title>Login | Tveeter</title>
 					<Title>Tveeter Login</Title>
 					<Input
 						type="email"

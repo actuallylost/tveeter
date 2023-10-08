@@ -1,6 +1,5 @@
 "use client";
 
-import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -9,10 +8,6 @@ import { Toast, ToastType } from "@/components";
 
 import { supabaseSessionCheck } from "../../common";
 import { login } from "../../redux";
-
-export const metadata: Metadata = {
-	title: "Redirect | Tveeter",
-};
 
 export default function Page() {
 	const router = useRouter();

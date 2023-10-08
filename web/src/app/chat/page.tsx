@@ -1,12 +1,12 @@
 "use client";
 
-import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
 import { Content, Footer, Header, Login, Message, Wrapper } from "@/components";
 import { StyledButton, StyledInput } from "@/components/Footer/style";
+import { Title } from "@/styles";
 
 import { supabaseLogout } from "../../common/supabase";
 import { logout, useAppDispatch, useAppSelector } from "../../redux";
@@ -15,10 +15,6 @@ interface MessagePayload {
 	username: string;
 	content: string;
 }
-
-export const metadata: Metadata = {
-	title: "Chat | Tveeter",
-};
 
 export default function Page() {
 	// Creates a reference for the browser to scroll to
@@ -136,6 +132,7 @@ export default function Page() {
 	return (
 		<>
 			<title>Chat | Tveeter</title>
+			<Title>Tveeter Chat</Title>
 			<Wrapper>
 				<Header username={username ?? "UsernameValueHere"}>
 					<Login clickHandler={handleClick} loggedIn={isLoggedIn} />

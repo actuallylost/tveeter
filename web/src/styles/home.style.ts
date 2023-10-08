@@ -26,6 +26,10 @@ export const H3 = styled.h3`
 		transition: transform 0.25s ease-out;
 	}
 
+	:hover {
+		cursor: pointer;
+	}
+
 	:hover:after {
 		transform: scaleX(1);
 		transform-origin: bottom left;

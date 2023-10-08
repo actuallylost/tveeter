@@ -1,12 +1,9 @@
-import { Metadata } from "next";
+"use client";
+
 import { useRouter } from "next/navigation";
 import React from "react";
 
 import { H1, H3 } from "@/styles";
-
-export const metadata: Metadata = {
-	title: "Home | Tveeter",
-};
 
 export default function Page() {
 	const router = useRouter();
@@ -19,6 +16,7 @@ export default function Page() {
 	return (
 		<>
 			{/* <Container> */}
+			<title>Home | Tveeter</title>
 			<H1>Under construction...</H1>
 			<H3 onClick={handleClick}>Click here to chat!</H3>
 			{/* </Container> */}
