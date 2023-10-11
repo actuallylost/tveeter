@@ -11,7 +11,7 @@ This is a project I built to learn more about how React, NestJS, and Socket.io w
 
 ## Running the app
 
-ITo run the frontend you'll need to create a `.env` file under the `web` directory and add the values `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_API_KEY`. You can get these values by following the documentation on [Supabase](https://supabase.com/).
+To run the frontend you'll need to create a `.env` file under the `web` directory and add the values `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_API_KEY`. You can get these values by following the documentation on [Supabase](https://supabase.com/).
 
 Then run:
 
