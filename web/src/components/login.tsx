@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export const StyledLogin = styled.button`
+interface LoginProps {
+	clickHandler: React.MouseEventHandler<HTMLButtonElement>;
+	loggedIn: boolean;
+}
+
+const StyledLogin = styled.button`
 	display: flex;
 	align-content: flex-end;
 	cursor: pointer;
@@ -31,3 +36,12 @@ export const StyledLogin = styled.button`
 		transform-origin: bottom left;
 	}
 `;
+
+// TODO: Implement
+export const Login: React.FC<LoginProps> = ({ clickHandler, loggedIn }) => {
+	return (
+		<>
+			<StyledLogin onClick={clickHandler}>{loggedIn ? "Logout" : "Login"}</StyledLogin>
+		</>
+	);
+};

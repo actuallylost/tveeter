@@ -1,8 +1,9 @@
+import React from "react";
 import styled from "styled-components";
 
 import { HStack } from "@/styles";
 
-export const StyledFooter = styled(HStack)`
+const StyledFooter = styled(HStack)`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -63,3 +64,7 @@ export const StyledButton = styled.button`
 		transition: all 0.3s ease-in-out;
 	}
 `;
+
+export const Footer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+	return <StyledFooter>{children}</StyledFooter>;
+};

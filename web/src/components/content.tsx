@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { VStack } from "@/styles";
 
-export const StyledContent = styled(VStack)`
+const StyledContent = styled(VStack)`
 	// The god solution for all problems in life is flex-grow: 1
 	display: flex;
 	background-color: #212121;
@@ -25,3 +25,7 @@ export const StyledContent = styled(VStack)`
 		padding: 0;
 	}
 `;
+
+export const Content: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+	return <StyledContent>{children}</StyledContent>;
+};
