@@ -3,11 +3,10 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import { supabaseRegister, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components";
-
-import { supabaseRegister, supabaseSessionCheck } from "../../common";
-import { useAppSelector } from "../../redux";
-import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "../../styles";
+import { useAppSelector } from "@/redux";
+import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 export default function Page() {
 	const router = useRouter();

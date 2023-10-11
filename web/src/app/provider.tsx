@@ -1,13 +1,12 @@
 "use client";
 
-import { Provider } from "react-redux";
+import { Provider } from "jotai";
 
-import { store } from "@/redux";
 import { GlobalStyles } from "@/styles";
 
 export const RootProvider = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<Provider store={store}>
+		<Provider>
 			<GlobalStyles />
 			{children}
 		</Provider>

@@ -4,10 +4,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components";
-
-import { supabaseSessionCheck } from "../../common";
-import { login } from "../../redux";
+import { login } from "@/redux";
 
 export default function Page() {
 	const router = useRouter();

@@ -4,12 +4,11 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
+import { supabaseLogout } from "@/common/supabase";
 import { Content, Footer, Header, Login, Message, Wrapper } from "@/components";
-import { StyledButton, StyledInput } from "@/components/Footer/style";
+import { StyledButton, StyledInput } from "@/components/footer";
+import { logout, useAppDispatch, useAppSelector } from "@/redux";
 import { Title } from "@/styles";
-
-import { supabaseLogout } from "../../common/supabase";
-import { logout, useAppDispatch, useAppSelector } from "../../redux";
 
 interface MessagePayload {
 	username: string;
