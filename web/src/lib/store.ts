@@ -2,10 +2,10 @@ import { createStore } from "jotai";
 
 import { setAuthAtom, setMessageAtom } from "@/lib";
 
-const authStore = createStore();
+export const authStore = createStore();
 authStore.set(setAuthAtom, { isLoggedIn: false, accessToken: null, username: null });
 
-const messageStore = createStore();
+export const messageStore = createStore();
 messageStore.set(setMessageAtom, {
 	id: null,
 	content: null,

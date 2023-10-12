@@ -13,8 +13,8 @@ export default function Page() {
 	// const dispatch = useAppDispatch();
 	// const { isLoggedIn } = useAppSelector((state) => state.auth);
 	const { isLoggedIn } = useAtomValue(authAtom);
-
 	const setAuth = useSetAtom(setAuthAtom);
+
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
@@ -37,6 +37,7 @@ export default function Page() {
 			.then(({ data, accessToken }) => {
 				// dispatch(login({ username: data["username"], accessToken }));
 				setAuth({ isLoggedIn: true, username: data["username"], accessToken });
+				console.log(data["username"]);
 				router.push("/chat");
 			})
 			.catch((err) => {
@@ -65,6 +66,7 @@ export default function Page() {
 		if (error) {
 			setError(error);
 			console.log(error);
+			console.log(username);
 			return;
 		}
 
@@ -81,10 +83,10 @@ export default function Page() {
 		setAuth({ isLoggedIn: true, username, accessToken });
 	};
 
-	const handleKeyDown = (event: React.FormEvent) => {
-		event.preventDefault();
-		handleSubmit(event);
-	};
+	// const handleKeyDown = (event: React.FormEvent) => {
+	// 	event.preventDefault();
+	// 	handleSubmit(event);
+	// };
 
 	// If the user is logged in, don't render anything
 	if (isLoggedIn) {
@@ -101,7 +103,7 @@ export default function Page() {
 						type="email"
 						value={email}
 						onChange={handleEmailChange}
-						onKeyDown={handleKeyDown}
+						// onKeyDown={handleKeyDown}
 						placeholder="Enter your email address..."
 						required
 					/>
@@ -109,7 +111,7 @@ export default function Page() {
 						type="password"
 						value={password}
 						onChange={handlePasswordChange}
-						onKeyDown={handleKeyDown}
+						// onKeyDown={handleKeyDown}
 						placeholder="Enter your password..."
 						required
 					/>

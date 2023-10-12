@@ -16,7 +16,6 @@ import {
 	Wrapper,
 } from "@/components";
 import { authAtom, setAuthAtom, supabaseLogout } from "@/lib";
-import { Title } from "@/styles";
 
 interface MessagePayload {
 	username: string;
@@ -31,8 +30,8 @@ export default function Page() {
 	// const dispatch = useAppDispatch();
 	// const { isLoggedIn, username } = useAppSelector((state) => state.auth);
 	const { isLoggedIn, username } = useAtomValue(authAtom);
-
 	const setAuth = useSetAtom(setAuthAtom);
+
 	const [msg, setMsg] = useState<string>("");
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
 
@@ -116,6 +115,8 @@ export default function Page() {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
+		console.log(username);
+		console.log(msg);
 		if (msg !== "") {
 			await fetch(
 				`http://localhost:3000/api/v1/channels/${process.env.NEXT_PUBLIC_GLOBAL_CHANNEL_ID}/messages/`,
@@ -142,7 +143,6 @@ export default function Page() {
 	return (
 		<>
 			<title>Chat | Tveeter</title>
-			<Title>Tveeter Chat</Title>
 			<Wrapper>
 				<Header username={username ?? "UsernameValueHere"}>
 					<Login clickHandler={handleClick} loggedIn={isLoggedIn} />
