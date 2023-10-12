@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-import { Nullable } from "./types/Nullable";
+import { Nullable } from "../types/Nullable";
 
 type MessageState =
 	| {

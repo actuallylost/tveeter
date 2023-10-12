@@ -1,13 +1,21 @@
 "use client";
 
+import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-import { supabaseLogout } from "@/common/supabase";
-import { Content, Footer, Header, Login, Message, Wrapper } from "@/components";
-import { StyledButton, StyledInput } from "@/components/footer";
-import { logout, useAppDispatch, useAppSelector } from "@/redux";
+import {
+	Content,
+	Footer,
+	Header,
+	Login,
+	Message,
+	StyledButton,
+	StyledInput,
+	Wrapper,
+} from "@/components";
+import { authAtom, setAuthAtom, supabaseLogout } from "@/lib";
 import { Title } from "@/styles";
 
 interface MessagePayload {
@@ -20,9 +28,11 @@ export default function Page() {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 
 	const router = useRouter();
-	const dispatch = useAppDispatch();
-	const { isLoggedIn, username } = useAppSelector((state) => state.auth);
+	// const dispatch = useAppDispatch();
+	// const { isLoggedIn, username } = useAppSelector((state) => state.auth);
+	const { isLoggedIn, username } = useAtomValue(authAtom);
 
+	const setAuth = useSetAtom(setAuthAtom);
 	const [msg, setMsg] = useState<string>("");
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
 
@@ -100,7 +110,8 @@ export default function Page() {
 	const handleClick = async (event: React.FormEvent) => {
 		event.preventDefault();
 		await supabaseLogout();
-		dispatch(logout());
+		// dispatch(logout());
+		setAuth({ isLoggedIn: false, username: null, accessToken: null });
 	};
 
 	const handleSubmit = async (event: React.FormEvent) => {

@@ -26,7 +26,7 @@ export const authAtom = atom((get) => {
 });
 
 // Write-only
-export const setAuthAtom = atom(null, (get, set, arg: AuthState) => {
+export const setAuthAtom = atom(null, (_get, set, arg: AuthState) => {
 	set(isLoggedInAtom, arg.isLoggedIn);
 	set(accessTokenAtom, arg.accessToken);
 	set(usernameAtom, arg.username);

@@ -1,38 +1,42 @@
 "use client";
 
+import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { supabaseLogin, supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components/toast";
-import { login, useAppDispatch, useAppSelector } from "@/redux";
+import { authAtom, setAuthAtom, supabaseLogin, supabaseSessionCheck } from "@/lib";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 export default function Page() {
 	const router = useRouter();
-	const dispatch = useAppDispatch();
-	const { isLoggedIn } = useAppSelector((state) => state.auth);
+	// const dispatch = useAppDispatch();
+	// const { isLoggedIn } = useAppSelector((state) => state.auth);
+	const { isLoggedIn } = useAtomValue(authAtom);
 
+	const setAuth = useSetAtom(setAuthAtom);
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		supabaseSessionCheck()
-			.then(({ accessToken, email, error }) => {
+			.then(async ({ accessToken, email, error }) => {
 				if (accessToken === null) {
 					throw error;
 				}
 
-				return fetch(`http://localhost:3000/api/v1/users?email=${email}`, {
+				const res = await fetch(`http://localhost:3000/api/v1/users?email=${email}`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 					},
-				}).then(async (res) => ({ data: await res.json(), accessToken, email }));
+				});
+				return { data: await res.json(), accessToken, email };
 			})
 			.then(({ data, accessToken }) => {
-				dispatch(login({ username: data["username"], accessToken }));
+				// dispatch(login({ username: data["username"], accessToken }));
+				setAuth({ isLoggedIn: true, username: data["username"], accessToken });
 				router.push("/chat");
 			})
 			.catch((err) => {
@@ -73,7 +77,8 @@ export default function Page() {
 		setError(null);
 		console.log(username);
 		console.log(accessToken);
-		dispatch(login({ username, accessToken }));
+		// dispatch(login({ username, accessToken }));
+		setAuth({ isLoggedIn: true, username, accessToken });
 	};
 
 	const handleKeyDown = (event: React.FormEvent) => {

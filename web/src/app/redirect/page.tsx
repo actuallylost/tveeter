@@ -1,17 +1,18 @@
 "use client";
 
+// import { login } from "@/redux";
+import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
-import { supabaseSessionCheck } from "@/common";
 import { Toast, ToastType } from "@/components";
-import { login } from "@/redux";
+import { setAuthAtom, supabaseSessionCheck } from "@/lib";
 
 export default function Page() {
 	const router = useRouter();
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
+	const setAuth = useSetAtom(setAuthAtom);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -34,7 +35,8 @@ export default function Page() {
 			})
 			.then(({ data, accessToken }) => {
 				const username = data["username"];
-				dispatch(login({ username, accessToken }));
+				// dispatch(login({ username, accessToken }));
+				setAuth({ isLoggedIn: true, username, accessToken });
 				router.push("/chat");
 			})
 			.catch((err) => {
@@ -48,7 +50,7 @@ export default function Page() {
 		return () => {
 			abortController.abort();
 		};
-	}, [dispatch, router]);
+	}, [router]);
 
 	return (
 		<>
