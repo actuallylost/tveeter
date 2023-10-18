@@ -3,6 +3,16 @@
 version = 3
 
 [[package]]
+name = "Tveeter"
+version = "1.0.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -61,16 +71,6 @@ name = "anyhow"
 version = "1.0.75"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4668cab20f66d8d020e1fbc0ebe47217433c1b6c8f2040faf858554e394ace6"
-
-[[package]]
-name = "app"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
-]
 
 [[package]]
 name = "atk"
@@ -2179,9 +2179,9 @@ dependencies = [
 
 [[package]]
 name = "rustix"
-version = "0.38.17"
+version = "0.38.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f25469e9ae0f3d0047ca8b93fc56843f38e6774f0914a107ff8b41be8be8e0b7"
+checksum = "745ecfa778e66b2b63c88a61cb36e0eea109e803b0b86bf9879fbc77c70e86ed"
 dependencies = [
  "bitflags 2.4.0",
  "errno",
