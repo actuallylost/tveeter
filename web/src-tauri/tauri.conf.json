@@ -3,11 +3,11 @@
 	"build": {
 		"beforeBuildCommand": "pnpm build",
 		"beforeDevCommand": "pnpm dev",
-		"devPath": "http://localhost:3000",
+		"devPath": "http://localhost:3001",
 		"distDir": "../out"
 	},
 	"package": {
-		"productName": "@tveeterapp",
+		"productName": "@tveeterweb",
 		"version": "0.1.0"
 	},
 	"tauri": {

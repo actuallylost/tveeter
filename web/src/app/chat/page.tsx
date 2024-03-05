@@ -1,5 +1,6 @@
 "use client";
 
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
@@ -14,10 +15,10 @@ import {
 	StyledInput,
 	Wrapper,
 } from "@/components";
-import { Title } from "@/styles";
 
-import { supabaseLogout } from "../../common/supabase";
-import { logout, useAppDispatch, useAppSelector } from "../../redux";
+import { authAtom, setAuthAtom, supabaseLogout } from "@/lib";
+import { authStore } from "@/lib/store";
+
 
 interface MessagePayload {
 	username: string;
@@ -29,8 +30,10 @@ export default function Page() {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 
 	const router = useRouter();
-	const dispatch = useAppDispatch();
-	const { isLoggedIn, username } = useAppSelector((state) => state.auth);
+	// const dispatch = useAppDispatch();
+	// const { isLoggedIn, username } = useAppSelector((state) => state.auth);
+	// const setAuth = useSetAtom(setAuthAtom);
+	const { isLoggedIn, username } = useAtomValue(authAtom);
 
 	const [msg, setMsg] = useState<string>("");
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
@@ -109,11 +112,15 @@ export default function Page() {
 	const handleClick = async (event: React.FormEvent) => {
 		event.preventDefault();
 		await supabaseLogout();
-		dispatch(logout());
+		// dispatch(logout());
+		// setAuth({ isLoggedIn: false, username: null, accessToken: null });
+		authStore.set(setAuthAtom, { isLoggedIn: false, username: null, accessToken: null });
 	};
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
+		console.log(username);
+		console.log(msg);
 		if (msg !== "") {
 			await fetch(
 				`http://localhost:3000/api/v1/channels/${process.env.NEXT_PUBLIC_GLOBAL_CHANNEL_ID}/messages/`,
@@ -140,7 +147,6 @@ export default function Page() {
 	return (
 		<>
 			<title>Chat | Tveeter</title>
-			<Title>Tveeter Chat</Title>
 			<Wrapper>
 				<Header username={username ?? "UsernameValueHere"}>
 					<Login clickHandler={handleClick} loggedIn={isLoggedIn} />

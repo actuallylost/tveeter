@@ -1,17 +1,16 @@
 "use client";
 
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { Toast, ToastType } from "@/components";
-
-import { supabaseRegister, supabaseSessionCheck } from "../../common";
-import { useAppSelector } from "../../redux";
-import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "../../styles";
+import { authAtom, supabaseRegister, supabaseSessionCheck } from "@/lib";
+import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 export default function Page() {
 	const router = useRouter();
-	const { isLoggedIn } = useAppSelector((state) => state.auth);
+	const { isLoggedIn } = useAtomValue(authAtom);
 
 	const [email, setEmail] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
