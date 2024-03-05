@@ -1,6 +1,6 @@
 "use client";
 
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
@@ -16,6 +16,7 @@ import {
 	Wrapper,
 } from "@/components";
 import { authAtom, setAuthAtom, supabaseLogout } from "@/lib";
+import { authStore } from "@/lib/store";
 
 interface MessagePayload {
 	username: string;
@@ -29,8 +30,8 @@ export default function Page() {
 	const router = useRouter();
 	// const dispatch = useAppDispatch();
 	// const { isLoggedIn, username } = useAppSelector((state) => state.auth);
+	// const setAuth = useSetAtom(setAuthAtom);
 	const { isLoggedIn, username } = useAtomValue(authAtom);
-	const setAuth = useSetAtom(setAuthAtom);
 
 	const [msg, setMsg] = useState<string>("");
 	const [messages, setMessages] = useState<MessagePayload[]>([]);
@@ -110,7 +111,8 @@ export default function Page() {
 		event.preventDefault();
 		await supabaseLogout();
 		// dispatch(logout());
-		setAuth({ isLoggedIn: false, username: null, accessToken: null });
+		// setAuth({ isLoggedIn: false, username: null, accessToken: null });
+		authStore.set(setAuthAtom, { isLoggedIn: false, username: null, accessToken: null });
 	};
 
 	const handleSubmit = async (event: React.FormEvent) => {

@@ -1,6 +1,5 @@
 "use client";
 
-// import { login } from "@/redux";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

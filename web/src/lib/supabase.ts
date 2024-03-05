@@ -70,7 +70,9 @@ export const supabaseLogin = async (
 		},
 	})
 		.then((res) => res.json())
-		.then((data: string) => data)
+		// TODO: Check if below has a different way of doing it
+		// data["username"] is required to fetch the username of the user
+		.then((data: any) => data["username"])
 		.catch((err) => console.log(err));
 
 	if (typeof username !== "string") {

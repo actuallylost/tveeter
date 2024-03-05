@@ -1,11 +1,12 @@
 "use client";
 
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { Toast, ToastType } from "@/components/toast";
 import { authAtom, setAuthAtom, supabaseLogin, supabaseSessionCheck } from "@/lib";
+import { authStore } from "@/lib/store";
 import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 export default function Page() {
@@ -13,7 +14,6 @@ export default function Page() {
 	// const dispatch = useAppDispatch();
 	// const { isLoggedIn } = useAppSelector((state) => state.auth);
 	const { isLoggedIn } = useAtomValue(authAtom);
-	const setAuth = useSetAtom(setAuthAtom);
 
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
@@ -36,7 +36,11 @@ export default function Page() {
 			})
 			.then(({ data, accessToken }) => {
 				// dispatch(login({ username: data["username"], accessToken }));
-				setAuth({ isLoggedIn: true, username: data["username"], accessToken });
+				authStore.set(setAuthAtom, {
+					isLoggedIn: true,
+					username: data["username"],
+					accessToken,
+				});
 				console.log(data["username"]);
 				router.push("/chat");
 			})
@@ -80,9 +84,10 @@ export default function Page() {
 		console.log(username);
 		console.log(accessToken);
 		// dispatch(login({ username, accessToken }));
-		setAuth({ isLoggedIn: true, username, accessToken });
+		authStore.set(setAuthAtom, { isLoggedIn: true, username, accessToken });
 	};
 
+	// TODO: See if this is necessary
 	// const handleKeyDown = (event: React.FormEvent) => {
 	// 	event.preventDefault();
 	// 	handleSubmit(event);
