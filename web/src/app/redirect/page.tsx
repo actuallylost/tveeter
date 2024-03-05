@@ -9,7 +9,6 @@ import { setAuthAtom, supabaseSessionCheck } from "@/lib";
 
 export default function Page() {
 	const router = useRouter();
-	// const dispatch = useDispatch();
 	const setAuth = useSetAtom(setAuthAtom);
 
 	const [error, setError] = useState<string | null>(null);
@@ -34,7 +33,6 @@ export default function Page() {
 			})
 			.then(({ data, accessToken }) => {
 				const username = data["username"];
-				// dispatch(login({ username, accessToken }));
 				setAuth({ isLoggedIn: true, username, accessToken });
 				router.push("/chat");
 			})

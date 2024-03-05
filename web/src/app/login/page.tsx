@@ -11,8 +11,6 @@ import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "
 
 export default function Page() {
 	const router = useRouter();
-	// const dispatch = useAppDispatch();
-	// const { isLoggedIn } = useAppSelector((state) => state.auth);
 	const { isLoggedIn } = useAtomValue(authAtom);
 
 	const [email, setEmail] = useState<string>("");
@@ -35,7 +33,6 @@ export default function Page() {
 				return { data: await res.json(), accessToken, email };
 			})
 			.then(({ data, accessToken }) => {
-				// dispatch(login({ username: data["username"], accessToken }));
 				authStore.set(setAuthAtom, {
 					isLoggedIn: true,
 					username: data["username"],

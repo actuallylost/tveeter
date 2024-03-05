@@ -15,10 +15,8 @@ import {
 	StyledInput,
 	Wrapper,
 } from "@/components";
-
 import { authAtom, setAuthAtom, supabaseLogout } from "@/lib";
 import { authStore } from "@/lib/store";
-
 
 interface MessagePayload {
 	username: string;
@@ -30,9 +28,6 @@ export default function Page() {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 
 	const router = useRouter();
-	// const dispatch = useAppDispatch();
-	// const { isLoggedIn, username } = useAppSelector((state) => state.auth);
-	// const setAuth = useSetAtom(setAuthAtom);
 	const { isLoggedIn, username } = useAtomValue(authAtom);
 
 	const [msg, setMsg] = useState<string>("");
@@ -112,8 +107,6 @@ export default function Page() {
 	const handleClick = async (event: React.FormEvent) => {
 		event.preventDefault();
 		await supabaseLogout();
-		// dispatch(logout());
-		// setAuth({ isLoggedIn: false, username: null, accessToken: null });
 		authStore.set(setAuthAtom, { isLoggedIn: false, username: null, accessToken: null });
 	};
 
