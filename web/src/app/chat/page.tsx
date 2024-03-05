@@ -15,8 +15,10 @@ import {
 	StyledInput,
 	Wrapper,
 } from "@/components";
+
 import { authAtom, setAuthAtom, supabaseLogout } from "@/lib";
 import { authStore } from "@/lib/store";
+
 
 interface MessagePayload {
 	username: string;
