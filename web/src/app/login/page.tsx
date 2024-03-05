@@ -1,18 +1,19 @@
 "use client";
 
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { supabaseLogin, supabaseSessionCheck } from "@/common/";
-import { Toast, ToastType } from "@/components";
-import { login, useAppDispatch, useAppSelector } from "@/redux";
-
-import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "../../styles";
+import { Toast, ToastType } from "@/components/toast";
+import { authAtom, setAuthAtom, supabaseLogin, supabaseSessionCheck } from "@/lib";
+import { authStore } from "@/lib/store";
+import { Button, ButtonContainer, Input, ModalContainer, Title, Wrapper } from "@/styles";
 
 export default function Page() {
 	const router = useRouter();
-	const dispatch = useAppDispatch();
-	const { isLoggedIn } = useAppSelector((state) => state.auth);
+	// const dispatch = useAppDispatch();
+	// const { isLoggedIn } = useAppSelector((state) => state.auth);
+	const { isLoggedIn } = useAtomValue(authAtom);
 
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
@@ -20,20 +21,27 @@ export default function Page() {
 
 	useEffect(() => {
 		supabaseSessionCheck()
-			.then(({ accessToken, email, error }) => {
+			.then(async ({ accessToken, email, error }) => {
 				if (accessToken === null) {
 					throw error;
 				}
 
-				return fetch(`http://localhost:3000/api/v1/users?email=${email}`, {
+				const res = await fetch(`http://localhost:3000/api/v1/users?email=${email}`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 					},
-				}).then(async (res) => ({ data: await res.json(), accessToken, email }));
+				});
+				return { data: await res.json(), accessToken, email };
 			})
 			.then(({ data, accessToken }) => {
-				dispatch(login({ username: data["username"], accessToken }));
+				// dispatch(login({ username: data["username"], accessToken }));
+				authStore.set(setAuthAtom, {
+					isLoggedIn: true,
+					username: data["username"],
+					accessToken,
+				});
+				console.log(data["username"]);
 				router.push("/chat");
 			})
 			.catch((err) => {
@@ -62,6 +70,7 @@ export default function Page() {
 		if (error) {
 			setError(error);
 			console.log(error);
+			console.log(username);
 			return;
 		}
 
@@ -74,13 +83,15 @@ export default function Page() {
 		setError(null);
 		console.log(username);
 		console.log(accessToken);
-		dispatch(login({ username, accessToken }));
+		// dispatch(login({ username, accessToken }));
+		authStore.set(setAuthAtom, { isLoggedIn: true, username, accessToken });
 	};
 
-	const handleKeyDown = (event: React.FormEvent) => {
-		event.preventDefault();
-		handleSubmit(event);
-	};
+	// TODO: See if this is necessary
+	// const handleKeyDown = (event: React.FormEvent) => {
+	// 	event.preventDefault();
+	// 	handleSubmit(event);
+	// };
 
 	// If the user is logged in, don't render anything
 	if (isLoggedIn) {
@@ -97,7 +108,7 @@ export default function Page() {
 						type="email"
 						value={email}
 						onChange={handleEmailChange}
-						onKeyDown={handleKeyDown}
+						// onKeyDown={handleKeyDown}
 						placeholder="Enter your email address..."
 						required
 					/>
@@ -105,7 +116,7 @@ export default function Page() {
 						type="password"
 						value={password}
 						onChange={handlePasswordChange}
-						onKeyDown={handleKeyDown}
+						// onKeyDown={handleKeyDown}
 						placeholder="Enter your password..."
 						required
 					/>
