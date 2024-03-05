@@ -4,8 +4,16 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-import { Content, Footer, Header, Login, Message, Wrapper } from "@/components";
-import { StyledButton, StyledInput } from "@/components/Footer/style";
+import {
+	Content,
+	Footer,
+	Header,
+	Login,
+	Message,
+	StyledButton,
+	StyledInput,
+	Wrapper,
+} from "@/components";
 import { Title } from "@/styles";
 
 import { supabaseLogout } from "../../common/supabase";
