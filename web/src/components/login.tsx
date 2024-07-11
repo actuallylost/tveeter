@@ -37,7 +37,6 @@ const StyledLogin = styled.button`
 	}
 `;
 
-// TODO: Implement
 export const Login: React.FC<LoginProps> = ({ clickHandler, loggedIn }) => {
 	return (
 		<>
