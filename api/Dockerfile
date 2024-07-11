@@ -1,4 +1,4 @@
-FROM node:16.15-alpine
+FROM node:20-alpine
 
 RUN apk add --no-cache bash
 RUN apk add --no-cache --virtual .builds-deps build-base python3
