@@ -4,18 +4,19 @@
 	"module": "index.ts",
 	"type": "module",
 	"scripts": {
-		"prepare": "husky install"
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@nestjs/mapped-types": "*",
-		"husky": "^8.0.3"
+		"husky": "^9"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.5.1",
-		"@commitlint/config-conventional": "^17.4.4",
-		"eslint-config-prettier": "^8.3.0",
-		"lint-staged": "^13.2.0",
-		"prettier": "^2.8.7"
+		"@commitlint/cli": "^19",
+		"@commitlint/config-conventional": "^19",
+		"@eslint/js": "^9.26.0",
+		"eslint-config-prettier": "^10",
+		"lint-staged": "^15",
+		"prettier": "^3"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"
